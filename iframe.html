@@ -1,16 +1,28 @@
 <html>
   <head>
     <title>Test previewer</title>
+    <style>
+      iframe {
+        height: 100%;
+        width: 100%;
+      }
+    </style>
   </head>
   <body>
     Lets checkout the previewer!
-    <iframe
-      height="100%"
-      width="100%"
-      src="https://main--da-helpx-gem--adobecom.aem.page/previewer.html"
-    ></iframe>
-    <script type="text/javascript">
-      const ifr = document.querySelector('iframe');
+    <iframe src="./previewer.html?martech=off"></iframe>
+    <script type="text/javascript" defer>
+      const ifr = document.createElement('iframe');
+      ifr.onload = () => {
+        document
+          .querySelector('iframe')
+          .contentWindow.postMessage(
+            '{"url": "https://main--unity--adobecom.hlx.live/unity/milostudio/marquee.plain.html"}',
+            '*'
+          );
+      };
+      ifr.src = './previewer.html';
+      document.querySelector('body').append(ifr);
     </script>
   </body>
 </html>

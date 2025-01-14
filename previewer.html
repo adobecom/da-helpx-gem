@@ -1,6 +1,18 @@
 <html>
   <head>
     <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <script>
+      window.addEventListener('message', async (e) => {
+        const u = JSON.parse(event.data).url;
+        const res = await fetch(`${u}?martech=off`);
+        const block = await res.text();
+        document.querySelector('body main').innerHTML = block;
+        const { loadArea } = await import(
+          `https://main--milo--adobecom.hlx.live/libs/utils/utils.js`
+        );
+        await loadArea();
+      });
+    </script>
     <script src="./scripts/preview.js" type="module"></script>
     <style>
       body {

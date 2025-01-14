@@ -124,31 +124,19 @@ const miloLibs = setLibs(LIBS);
 
 (function loadStyles() {
   const paths = [`${miloLibs}/styles/styles.css`];
-  if (STYLES) { paths.push(STYLES); }
+  if (STYLES) {
+    paths.push(STYLES);
+  }
   paths.forEach((path) => {
     const link = document.createElement('link');
     link.setAttribute('rel', 'stylesheet');
     link.setAttribute('href', path);
     document.head.appendChild(link);
   });
-}());
+})();
 
 (async function loadPage() {
   const { loadArea, setConfig } = await import(`${miloLibs}/utils/utils.js`);
   const config = setConfig({ ...CONFIG, miloLibs });
   await loadArea();
-}());
-
-(async function listenAndReload() {
-  window.addEventListener("message", async (event) => {
-    const { source, unity } = JSON.parse(event.data);
-    if (!(source == 'milo-studio')) return;
-    const u = document.querySelector('.section');
-    const res = await fetch(`https://main--unity--adobecom.hlx.live/unity/milostudio/marquee.plain.html`);
-    const block = await res.text();
-    document.querySelector('body main').innerHTML = block;
-    document.querySelector('.marquee').parentElement.innerHTML += unity;
-    const { loadArea } = await import(`${miloLibs}/utils/utils.js`);
-    await loadArea();
-  });
-}());
+})();
