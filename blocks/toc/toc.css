@@ -1,0 +1,186 @@
+
+.toc  p {
+  margin-bottom: .25rem
+}
+
+.toc  li,.toc  ul {
+  list-style-type: none
+}
+
+.toc .toclink-label a {
+  color: #4b4b4b;
+  display: block;
+  margin-left: .75rem
+}
+
+.toc  .toclink-label.hasChildren .parentNode:hover {
+  display: block;
+  background-color: #E6E6E6;
+  border-radius: .25rem;
+  margin-left: -1.75rem;
+  padding-left: 1.813rem
+}
+
+.toc  .tocList>.toclink-label>.parentNode:hover{
+  display: block;
+  background-color: #E6E6E6;
+  border-radius: .25rem;
+  margin-left: -.75rem;
+  padding-left: .813rem
+}
+
+.toc  .tocList>.toclink-label>.tocListItem.children>.noChild:hover {
+  display: block;
+  background-color: #E6E6E6;
+  border-radius: .25rem;
+  margin-left: -.75rem;
+  padding-left: 1.75rem
+}
+
+.toc  .toclink-label .noChild {
+  margin-left: -1.75rem;
+  padding-left: 2.75rem
+}
+
+.toc  .toclink-label .noChild:hover {
+  background-color: #E6E6E6;
+  border-radius: .25rem
+}
+
+.toc  .toclink-label .parentNode,.toc  .toclink-label a {
+  padding-top: .375rem;
+  padding-bottom: .5rem;
+  text-decoration: none;
+}
+
+.toc  li.toclink-label{
+  padding: 0 0 0 .625rem;
+  margin-bottom: .25rem;
+  font-size: .875rem;
+  line-height: 1.125rem
+}
+
+.toc  li.toclink-label .parentNodeIcon{
+  background: url("data:image/svg+xml,%3Csvg id='Layer_1' data-name='Layer 1' xmlns='http://www.w3.org/2000/svg' viewBox='0 0 18 18'%3E%3Crect id='Canvas' width='10' height='10' style='fill:%23ff13dc;fill-opacity:0'/%3E%3Cpath d='M12,9a1,1,0,0,1-.29.7l-4,4a1,1,0,0,1-1.41.13,1,1,0,0,1-.12-1.41l.09-.1,0,0L9.59,9,6.3,5.72A1,1,0,0,1,7.69,4.28l0,0,4,4A1.05,1.05,0,0,1,12,9Z' style='fill:%236e6e6e'/%3E%3C/svg%3E") no-repeat left;
+  content:' ';
+  height: 14px;
+  width: 14px;
+  top: 8px;
+  position: absolute;
+  cursor: pointer
+}
+
+.toc  li.toclink-label .parentNode.expandToc .parentNodeIcon {
+  -webkit-transform: rotate(90deg);
+  transform: rotate(90deg)
+}
+
+.toc  li.toclink-label .parentNodeLabel{
+  padding: 0 .875rem;
+  font-size: .875rem;
+  line-height: 1.125rem
+}
+
+.toc  li.toclink-label .parentNode {
+  padding-left: .05rem;
+  cursor: pointer;
+  display: block;
+  position: relative
+}
+
+.toc  li.toclink-label .parentNode.highlightNode{
+  font-weight: 700
+}
+
+.toc  li.toclink-label .parentNode.expandToc~ul {
+  display: block
+}
+
+.toc  li.toclink-label .parentNode~ul{
+  display: none
+}
+
+.toc  li.toclink-label.is-active {
+  background-color: #E6E6E6;
+  border-radius: .25rem;
+}
+
+.toc  li.toclink-label.is-active:hover {
+  background-color: #d5d5d5
+}
+
+.toc  ul.tocList>li .tocListItem.children{
+  margin-top: .3125rem
+}
+
+.toc .productDetails {
+  position: -webkit-sticky;
+  position: sticky;
+  top: 0;
+  background-color: #fff;
+  z-index: 2;
+  padding-bottom: .938rem
+}
+
+.toc .productDetails .productOpenLink .openAppSection .openAppText {
+  line-height: 1.25rem
+}
+
+
+.toc .productDetails,.tocmobile .productDetails {
+color: #2c2c2c;
+display: flex
+}
+
+.toc .productDetails .productSection,.tocmobile .productDetails .productSection {
+margin-right: .5rem;
+display: flex
+}
+
+.toc .productDetails .productSection img,.tocmobile .productDetails .productSection img {
+height: 2.5rem;
+width: 2.5rem;
+align-self: center
+}
+
+.toc .productDetails .productOpenLink .productName,.tocmobile .productDetails .productOpenLink .productName {
+margin: 0;
+font-size: 1rem;
+font-weight: 700
+}
+
+.toc .productDetails .productOpenLink .productName.openAppDisabled,.tocmobile .productDetails .productOpenLink .productName.openAppDisabled {
+margin: .625rem 0
+}
+
+.toc .productDetails .productOpenLink .productName a,.tocmobile .productDetails .productOpenLink .productName a {
+color: #2c2c2c;
+text-decoration: none;
+margin: 0
+}
+
+.toc .productDetails .productOpenLink .openAppSection,.tocmobile .productDetails .productOpenLink .openAppSection {
+color: #0265dc;
+text-decoration: none;
+margin: 0
+}
+
+.toc .productDetails .productOpenLink .openAppSection .openAppText,.tocmobile .productDetails .productOpenLink .openAppSection .openAppText {
+color: #0265dc;
+font-size: .875rem;
+font-weight: 400
+}
+
+.toc .productDetails .productOpenLink .openAppSection .openAppText:hover,.tocmobile .productDetails .productOpenLink .openAppSection .openAppText:hover {
+text-decoration: underline
+}
+
+.toc .productDetails .productOpenLink .openAppSection .openAppIcon,.tocmobile .productDetails .productOpenLink .openAppSection .openAppIcon {
+display: inline-block;
+background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 12 12' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cg id='Frame'%3E%3Cpath id='iconPrimary' d='M10.8 9.4502V7.21865C10.8 6.97022 10.5984 6.76865 10.35 6.76865C10.1015 6.76865 9.89995 6.97022 9.89995 7.21865V9.4502C9.89995 9.69834 9.69809 9.9002 9.44995 9.9002H2.54995C2.30181 9.9002 2.09995 9.69834 2.09995 9.4502V2.5502C2.09995 2.30205 2.30181 2.1002 2.54995 2.1002H4.83658C5.08501 2.1002 5.28658 1.89863 5.28658 1.6502C5.28658 1.40176 5.08501 1.2002 4.83658 1.2002H2.54995C1.80552 1.2002 1.19995 1.80576 1.19995 2.5502V9.4502C1.19995 10.1946 1.80552 10.8002 2.54995 10.8002H9.44995C10.1944 10.8002 10.8 10.1946 10.8 9.4502Z' fill='%23006BEF'/%3E%3Cpath id='iconPrimary_2' d='M11.4001 1.04961V3.59522C11.4001 3.84365 11.1985 4.04522 10.9501 4.04522C10.7017 4.04522 10.5001 3.84365 10.5001 3.59522V2.13594L6.61826 6.01778C6.53037 6.10567 6.41523 6.14962 6.3001 6.14962C6.18496 6.14962 6.06982 6.10567 5.98193 6.01778C5.80615 5.842 5.80615 5.55723 5.98193 5.38145L9.86377 1.49961H8.40449C8.15606 1.49961 7.95449 1.29805 7.95449 1.04961C7.95449 0.801173 8.15606 0.599609 8.40449 0.599609H10.9501C11.1985 0.599609 11.4001 0.801173 11.4001 1.04961Z' fill='%23006BEF'/%3E%3C/g%3E%3C/svg%3E%0A");
+width: .75rem;
+height: .75rem;
+background-repeat: no-repeat;
+vertical-align: middle;
+margin-left: .3125rem
+}

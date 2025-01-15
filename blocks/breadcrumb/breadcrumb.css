@@ -1,0 +1,76 @@
+.breadcrumb ul {
+    align-items: center;
+    display: flex;
+    list-style: none;
+    margin: 1px 0;
+    padding: 0
+}
+
+.breadcrumb ul li {
+    font-size: .875rem;
+    color: #464646;
+    font-weight: 400;
+    padding: .25rem .5rem .25rem 0;
+    margin: 0;
+}
+
+.breadcrumb ul li:not(:first-child)::before,.breadcrumb ul li:only-child::before {
+    margin: .5rem .5rem .15rem 0;
+    border-color: #292929;
+    border-style: solid;
+    border-width: 0 1.5px 1.5px 0;
+    content: '';
+    height: .375rem;
+    width: .375rem;
+    display: inline-block
+}
+
+.breadcrumb ul li:hover {
+    color: #2c2c2c
+}
+
+.breadcrumb ul li:not(:first-child)::before {
+    -webkit-transform: rotate(-45deg);
+    transform: rotate(-45deg);
+    -webkit-transform-origin: 75% 75%;
+    transform-origin: 75% 75%;
+}
+
+.breadcrumb ul li:only-child::before {
+    -webkit-transform: rotate(-220deg);
+    transform: rotate(-220deg);
+    -webkit-transform-origin: 75% 75%;
+    transform-origin: 75% 75%
+}
+
+.breadcrumb ul li a {
+    color: inherit;
+    font-weight: inherit;
+    text-decoration: none
+}
+
+@media only screen and (min-width: 37.5rem) and (max-width:74.9375rem) {
+    .breadcrumb ul li {
+        color:#464646;
+        padding: .375rem 0 .5625rem
+    }
+
+    .breadcrumb ul li:not(:nth-last-child(1)) {
+        display: none
+    }
+
+    .breadcrumb ul li:not(:first-child)::before {
+        border-color: #292929;
+        border-style: solid;
+        border-width: 0 1.5px 1.5px 0;
+        content: '';
+        display: inline-block;
+        height: .375rem;
+        -webkit-transform: rotate(135deg);
+        transform: rotate(135deg);
+        -webkit-transform-origin: 75% 75%;
+        transform-origin: 75% 75%;
+        width: .375rem;
+        margin: .5rem .5rem .15rem 0
+    }
+}
