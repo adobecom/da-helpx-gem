@@ -6,7 +6,181 @@
  * 
  *
  */
-/* Override display prop for main content from milo styles */
-main > div {
- display: block;
+
+:root {
+  --static-color-white: #fff;
+  --static-color-light-green: #0f996d;
+  --static-color-light-gray: #fafafa;
+  --static-color-dark-gray: #505050;
+  --static-color-gray-700: #333333;
+  --static-color-gray-200: #f5f5f5;
+
+  --static-color-heading-border: #dddddd;
+
+  --table-color-border: #bdbdbd;
+  --table-header-color-background: #ededed;
+  --internal-banner-color-background: var(--static-color-light-green);
+  --internal-banner-color-font: var(--static-color-dark-gray);
+  --footer-color-background: var(--static-color-light-gray);
+  --footer-color-font: var(--static-color-dark-gray);
+  --on-this-page-background: #eaeaea;
+
+  --grid-container-width-help-article: 100%;
+}
+
+body * {
+  padding: 0;
+  margin: 0;
+}
+
+body main ol>li,
+body main p,
+body main td,
+body main th,
+body main ul>li {
+  font-size: 18px;
+  margin-bottom: 18px;
+}
+
+body h1 {
+  font-size: 36px;
+  margin-bottom: 9px
+}
+
+body h2 {
+  font-size: 28px;
+  margin-bottom: 7px
+}
+
+body.helpxnext-article main>.section>.content {
+  max-width: 100%;
+}
+
+body.helpxnext-article main {
+  max-width: var(--grid-container-width);
+  margin: 0 auto;
+}
+
+body.helpxnext-article main>div {
+  margin: 2.5rem 0 0;
+}
+
+body.helpxnext-article main {
+  display: flex;
+  justify-content: space-between;
+}
+
+body.helpxnext-article main>div.main-content {
+  display: block;
+  width: 70%;
+  max-width: 70%;
+}
+
+body.helpxnext-article main>div.toc {
+  display: block;
+  width: 24.67%;
+  max-width: 24.67%;
+  flex: 1;
+  position: sticky;
+  top: 5rem;
+}
+
+@media only screen and (max-width: 37.4375rem) {
+  body.helpxnext-article main>div.main-content {
+    min-height: 0;
+    width: calc(100% - 60px);
+    max-width: calc(100% - 60px);
+    padding: 0;
+    margin: 16px auto 0
+  }
+
+  body.helpxnext-article main>div.toc {
+    display: none;
+    width: 0%;
+    max-width: 0%;
+    padding: 0;
+    margin: 0;
+  }
+}
+
+@media only screen and (min-width: 37.5rem) and (max-width:74.9375rem) {
+  body.helpxnext-article main>div.main-content {
+    min-height: 0;
+    width: calc(100% - 132px);
+    max-width: calc(100% - 132px);
+    padding: 0;
+    margin: 16px auto 0
+  }
+
+  body.helpxnext-article main>div.toc {
+    display: none;
+    width: 0%;
+    max-width: 0%;
+    padding: 0;
+    margin: 0;
+  }
+}
+
+main a {
+  text-decoration: none;
+  color: #0265dc
+}
+
+.main-content ol,.main-content ul {
+  padding-left: 1.25rem
+}
+
+#title-bar .page-title {
+  display: inline;
+}
+
+.last-updated-container {
+  margin: 1rem 0;
+  font-size: 1rem;
+  font-style: italic;
+  line-height: 1.5rem;
+  color: #464646
+}
+
+/* page-navigation- arrows */
+
+.pagenavigationarrows .pna-target {
+  display: flex;
+  justify-content: space-between
+}
+
+.pagenavigationarrows .pna-target .label {
+  margin-bottom: .5rem;
+  color: #222;
+  line-height: 1.125rem
+}
+
+.pagenavigationarrows .pna-target .link {
+  color: #000;
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 0;
+  font-weight: 700
+}
+
+.pagenavigationarrows .pna-target .link::after {
+  margin-top: .75rem;
+  background-repeat: no-repeat;
+  height: .59375rem;
+  margin-bottom: 2.5rem
+}
+
+.pagenavigationarrows .pna-target .prev-content .link::after {
+  content: '';
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' id='Layer_2' data-name='Layer 2' viewBox='0 0 244.34 55'%3E%3Cdefs%3E%3Cstyle%3E .cls-1 %7B fill: %234b4b4b; stroke-width: 0px; %7D %3C/style%3E%3C/defs%3E%3Cg id='Layer_2-2' data-name='Layer 2'%3E%3Cg id='Layer_1-2' data-name='Layer 1-2'%3E%3Cpath class='cls-1' d='m244.34,32.08H5.87v-9.17h238.47v9.17ZM20.62,53.28L0,27.5,20.62,1.72c1.58-1.98,4.47-2.3,6.44-.72,1.98,1.58,2.3,4.47.72,6.44L9.45,30.36v-5.73l18.33,22.92c1.58,1.98,1.26,4.86-.72,6.44-1.97,1.58-4.86,1.26-6.44-.71Z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+}
+
+.pagenavigationarrows .pna-target .next-content {
+  text-align: right
+}
+
+.pagenavigationarrows .pna-target .next-content .link::after {
+  content: '';
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' id='Layer_2' data-name='Layer 2' viewBox='0 0 244.34 55'%3E%3Cdefs%3E%3Cstyle%3E .cls-1 %7B fill: %234b4b4b; stroke-width: 0px; %7D %3C/style%3E%3C/defs%3E%3Cg id='Layer_1-2' data-name='Layer 1'%3E%3Cpath class='cls-1' d='m0,22.92h238.47v9.17H0v-9.17ZM223.72,1.72l20.62,25.78-20.62,25.78c-1.58,1.98-4.47,2.3-6.44.72-1.98-1.58-2.3-4.47-.72-6.44l18.33-22.92v5.73l-18.33-22.92c-1.58-1.98-1.26-4.86.72-6.44,1.97-1.58,4.86-1.26,6.44.71Z'/%3E%3C/g%3E%3C/svg%3E");
+  background-position: right
 }
