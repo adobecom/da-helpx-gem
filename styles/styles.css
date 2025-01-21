@@ -6,3 +6,7 @@
  * 
  *
  */
+/* Override display prop for main content from milo styles */
+main > div {
+ display: block;
+}
