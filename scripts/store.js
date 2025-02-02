@@ -3,19 +3,41 @@ export function fetchFromStorage(contentUrl) {
     let html = "";
     if (editorHtml !== null) {
         const editorHtmlJson = JSON.parse(editorHtml);
-        for (let i=0; i< editorHtmlJson.length; i++) {
-            if (editorHtmlJson[i].url === contentUrl) {
-                html = editorHtmlJson[i].html;
-            }
+        if (editorHtmlJson.url === contentUrl) {
+            html = editorHtmlJson.html;
+        }
+    }
+    return html;
+}
+
+export function fetchTargetHtmlFromStorage(contentUrl) {
+    const editorHtml = window.sessionStorage.getItem('editor-html');
+    let html = "";
+    if (editorHtml !== null) {
+        const editorHtmlJson = JSON.parse(editorHtml);
+        if (editorHtmlJson.url === contentUrl) {
+            html = editorHtmlJson.targetHtml;
         }
     }
     return html;
 }
 
 export function pushToStorage(obj) {
-    const editorHtml = window.sessionStorage.getItem('editor-html');
-    if (editorHtml !== null) {
-        const editorHtmlJson = JSON.parse(editorHtml);
-        editorHtmlJson.push(obj);
+    window.sessionStorage.setItem('editor-html', JSON.stringify(obj));
+}
+
+export function pushEditableHtmlToSTore(editableHtml) {
+    if (window.sessionStorage.getItem('editor-html')) {
+        const json = JSON.parse(window.sessionStorage.getItem('editor-html'));
+        json.editableHtml = editableHtml;
+        window.sessionStorage.setItem('editor-html', JSON.stringify(json));
+    }
+}
+
+export function pushTargetHtmlToSTore(html) {
+    if (window.sessionStorage.getItem('editor-html')) {
+        const json = JSON.parse(window.sessionStorage.getItem('editor-html'));
+        json.targetHtml = html;
+        window.sessionStorage.setItem('editor-html', JSON.stringify(json));
     }
 }

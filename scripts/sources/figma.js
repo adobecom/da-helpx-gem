@@ -1,11 +1,11 @@
 import {fetchFromStorage, pushToStorage} from '../store.js';
 
 export async function fetchFigmaContent(figmaUrl, CONFIGS) {
-    console.log('inside fetchFigmaContent');
     let html = fetchFromStorage(figmaUrl);
 
     if (html === "") {
         html = await getFigmaContent(figmaUrl, CONFIGS);
+        pushToStorage({url: figmaUrl, html: html});
     }
 
     return html;
@@ -13,17 +13,37 @@ export async function fetchFigmaContent(figmaUrl, CONFIGS) {
 
 async function getFigmaContent(figmaUrl, CONFIGS) {
     const blockMapping = await fetchFigmaMapping(figmaUrl, CONFIGS);
-    console.log('figmaBlockMapping is : ', blockMapping);
     let html = "";
 
     if (blockMapping !== null && blockMapping.details !== undefined && blockMapping.details.components !== undefined) {
-        console.log('found the right set of mapping with size: ', blockMapping.details.components.length);
         html = await createHTML(blockMapping.details.components);
-        html = html.replaceAll("./media","https://main--milo--adobecom.hlx.page/media");
+        html = fixRelativeLinks(html);
         pushToStorage({'url': figmaUrl, 'html': html});
     }
     return html;
 }
+
+function fixRelativeLinks(html) {
+    let updatedHtml = html.replaceAll("./media","https://main--milo--adobecom.hlx.page/media");
+    // updatedHtml =  replaceRelativeHrefs(updatedHtml);
+    return updatedHtml;
+}
+
+function replaceRelativeHrefs(htmlString) {
+    const parser = new DOMParser();
+    const doc = parser.parseFromString(htmlString, 'text/html');
+    const baseUrl = 'https://main--milo--adobecom.hlx.page';
+
+    doc.querySelectorAll('a[href]').forEach((anchor) => {
+        const href = anchor.getAttribute('href');
+        if (href && !href.startsWith('http') && !href.startsWith('#')) {
+            anchor.setAttribute('href', baseUrl + href);
+        }
+    });
+
+    return doc.body.innerHTML;
+}
+
 
 async function fetchFigmaMapping(figmaUrl, CONFIGS) {
     const options = {
@@ -64,7 +84,6 @@ async function createHTML(blocks) {
 function getHtml(resp, id) {
     const parser = new DOMParser();
     const doc = parser.parseFromString(resp, 'text/html');
-    console.log('parsed doc is : ', doc.querySelector("." + id));
     return doc.querySelector("." + id);
 }
 
