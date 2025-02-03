@@ -12,10 +12,10 @@ const CONFIGS = {
 // Hack to handle auth
 const storedFigmaAuthToken = window.localStorage.getItem('figmaAuthToken');
 const storedDaToken = window.localStorage.getItem('daToken');
-if (storedFigmaAuthToken) {
+if (storedFigmaAuthToken && !CONFIGS.figmaAuthToken) {
   CONFIGS.figmaAuthToken = storedFigmaAuthToken;
 }
-if (storedDaToken) {
+if (storedDaToken && !CONFIGS.daToken) {
   CONFIGS.daToken = storedDaToken;
 }
 
