@@ -72,8 +72,11 @@
           'https://www.figma.com/design/FyVwRWFIKzqHzaoPagz2jh/sample_cc?node-id=1-11049&t=xVviyjbNIhfeIOtN-0'
         );
 
+        const target = 'da';
+        const targetUrl =
+          'https://admin.da.live/source/adobecom/da-helpx-gem/drafts/adisharm/test2';
         iframe.className = `iframe-container ${deviceType}`;
-        iframe.src = `${basePath}?source=${source}&contentUrl=${contentUrl}`;
+        iframe.src = `${basePath}?source=${source}&contentUrl=${contentUrl}&target=${target}&targetUrl=${targetUrl}`;
       }
     </script>
   </body>
