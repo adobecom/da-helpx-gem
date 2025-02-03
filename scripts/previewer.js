@@ -9,6 +9,16 @@ const CONFIGS = {
     'daToken': ''
 }
 
+// Hack to handle auth
+const storedFigmaAuthToken = window.localStorage.getItem('figmaAuthToken');
+const storedDaToken = window.localStorage.getItem('daToken');
+if (storedFigmaAuthToken) {
+  CONFIGS.figmaAuthToken = storedFigmaAuthToken;
+}
+if (storedDaToken) {
+  CONFIGS.daToken = storedDaToken;
+}
+
 async function initPreviewer() {
     const source = getQueryParam('source');
     const contentUrl = getQueryParam('contentUrl');
