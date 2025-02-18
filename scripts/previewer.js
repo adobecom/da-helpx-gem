@@ -4,7 +4,7 @@ import {targetCompatibleHtml} from './target.js';
 import {persistOnTarget} from './target.js';
 
 const CONFIGS = {
-    'figmaMappingUrl': 'https://runtime.adobe.io/api/v1/web/440859-genesis-dev/genesis-aio/fig-comps',
+    'figmaMappingUrl': 'https://440859-genesis-dev.adobeio-static.net/api/v1/web/genesis-aio/fig-comps',
     'figmaAuthToken': '',
     'daToken': ''
 }
