@@ -57,7 +57,7 @@ async function initiatePreviewer(source, contentUrl, editable, target, targetUrl
         html = await fetchFigmaContent(contentUrl, CONFIGS);
     }
 
-    html = targetCompatibleHtml(html, target, targetUrl, CONFIGS);
+    // html = targetCompatibleHtml(html, target, targetUrl, CONFIGS);
 
     if (editable && html) {
         html = renderEditableHtml(html);
