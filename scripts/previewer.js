@@ -25,6 +25,8 @@ async function initPreviewer() {
     const editable = getQueryParam('editable');
     const target = getQueryParam('target');
     const targetUrl = getQueryParam('targetUrl');
+    const token = getQueryParam('token');
+    CONFIGS.figmaAuthToken = 'Bearer ' + token;
 
     if (!source || !contentUrl || !target || !targetUrl) {
         throw new Error("Source, content Url, target url or target cannot be empty! Stoppping all processing!");
