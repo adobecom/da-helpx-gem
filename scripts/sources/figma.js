@@ -7,7 +7,7 @@ export async function fetchFigmaContent(figmaUrl, CONFIGS) {
 
     if (html === "") {
         html = await getFigmaContent(figmaUrl, CONFIGS);
-        pushToStorage({url: figmaUrl, html: html});
+        // pushToStorage({url: figmaUrl, html: html});
     }
 
     return html;
