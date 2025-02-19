@@ -56,12 +56,20 @@ async function createHTML(blocks) {
             console.log('foudn a valid block with id: ', obj.id);
             const doc = await fetchContent(obj.path, obj.id);
             const blockContent = getHtml(doc, obj.id);
+
+            // map the figma content before rendering
+            mapFigmaContent(blockContent, obj.properties);
+
             if (blockContent !== null) {
                 html += getHtml(doc, obj.id).outerHTML;
             }
         }
     }
     return html;
+}
+
+function mapFigmaContent(blockContent, props) {
+    console.log('inside mapFigmaContent');
 }
 
 function getHtml(resp, id) {
