@@ -54,6 +54,8 @@ async function initiatePreviewer(source, contentUrl, editable, target, targetUrl
         html = renderEditableHtml(html);
     }
 
+    html += `<a href="#" class="cta-button">Push to DA</a>`;
+    
     paintHtmlOnPage(html);
 
     // finally call the Milo loadarea function to paint the WYSIWYG page

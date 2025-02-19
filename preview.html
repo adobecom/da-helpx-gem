@@ -27,8 +27,28 @@
           transform: rotate(360deg);
         }
       }
-      body {
-        display: none;
+      .cta-button {
+        display: block; /* Allows margin auto to work */
+        background-color: #007bff; /* Blue */
+        color: white;
+        font-size: 18px;
+        font-weight: bold;
+        padding: 12px 24px;
+        border: none;
+        border-radius: 24px;
+        text-decoration: none;
+        transition: all 0.3s ease-in-out;
+        cursor: pointer;
+        box-shadow: 0 4px 6px rgba(0, 123, 255, 0.2);
+        text-align: center;
+        width: fit-content;
+        margin: 20px auto; /* Centers horizontally and adds top-bottom padding */
+      }
+
+      .cta-button:hover {
+        background-color: #0056b3; /* Darker blue */
+        box-shadow: 0 6px 10px rgba(0, 123, 255, 0.3);
+        transform: scale(1.05);
       }
     </style>
     <link rel="icon" href="data:," />

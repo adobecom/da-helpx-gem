@@ -3,13 +3,8 @@ import { mapMarqueeContent } from '../blocks/marquee.js';
 import { mapTextContent } from '../blocks/text.js';
 
 export async function fetchFigmaContent(figmaUrl, CONFIGS) {
-    let html = fetchFromStorage(figmaUrl);
-
-    if (html === "") {
-        html = await getFigmaContent(figmaUrl, CONFIGS);
-        // pushToStorage({url: figmaUrl, html: html});
-    }
-
+    const html = await getFigmaContent(figmaUrl, CONFIGS);
+    window.sessionStorage.setItem('previewer-html', html);
     return html;
 }
 
@@ -20,7 +15,7 @@ async function getFigmaContent(figmaUrl, CONFIGS) {
     if (blockMapping !== null && blockMapping.details !== undefined && blockMapping.details.components !== undefined) {
         html = await createHTML(blockMapping.details.components);
         html = fixRelativeLinks(html);
-        pushToStorage({'url': figmaUrl, 'html': html});
+        // pushToStorage({'url': figmaUrl, 'html': html});
     }
     return html;
 }
