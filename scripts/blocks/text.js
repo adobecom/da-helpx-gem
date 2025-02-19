@@ -1,4 +1,4 @@
-export function mapTextContent(blockContent) {
+export function mapTextContent(blockContent, figContent) {
 
     const x = {
         "detail":"",

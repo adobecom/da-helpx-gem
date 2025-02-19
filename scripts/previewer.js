@@ -6,7 +6,8 @@ import {persistOnTarget} from './target.js';
 const CONFIGS = {
     'figmaMappingUrl': 'https://440859-genesis-dev.adobeio-static.net/api/v1/web/genesis-aio/fig-comps',
     'figmaAuthToken': '',
-    'daToken': ''
+    'daToken': '',
+    'figmaBlockContentUrl': 'https://runtime.adobe.io/api/v1/web/440859-genesis-dev/genesis-aio/fig-comp-details'
 }
 
 // Hack to handle auth
@@ -55,7 +56,7 @@ async function initiatePreviewer(source, contentUrl, editable, target, targetUrl
     }
 
     html += `<a href="#" class="cta-button">Push to DA</a>`;
-    
+
     paintHtmlOnPage(html);
 
     // finally call the Milo loadarea function to paint the WYSIWYG page

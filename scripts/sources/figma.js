@@ -13,7 +13,7 @@ async function getFigmaContent(figmaUrl, CONFIGS) {
     let html = "";
 
     if (blockMapping !== null && blockMapping.details !== undefined && blockMapping.details.components !== undefined) {
-        html = await createHTML(blockMapping.details.components);
+        html = await createHTML(blockMapping.details.components, figmaUrl, CONFIGS);
         html = fixRelativeLinks(html);
         // pushToStorage({'url': figmaUrl, 'html': html});
     }
@@ -45,7 +45,7 @@ async function fetchFigmaMapping(figmaUrl, CONFIGS) {
       return mapping;
 }
 
-async function createHTML(blocks) {
+async function createHTML(blocks, figmaUrl, CONFIGS) {
     let html = "";
     for (let i=0; i< blocks.length; i++) {
         const obj = blocks[i];
@@ -54,8 +54,11 @@ async function createHTML(blocks) {
             const doc = await fetchContent(obj.path, obj.id);
             let blockContent = getHtml(doc, obj.id, obj.variant);
 
+            // get block figma content
+            const figContent = await fetchBlockContent(obj.figId, obj.id, figmaUrl, CONFIGS);
+
             // map the figma content before rendering
-            blockContent = mapFigmaContent(blockContent, obj.properties, obj.id);
+            blockContent = mapFigmaContent(blockContent, obj.properties, obj.id, figContent);
             if (blockContent !== null && blockContent !== undefined) {
                 html += blockContent.outerHTML;
             }
@@ -64,15 +67,35 @@ async function createHTML(blocks) {
     return html;
 }
 
-function mapFigmaContent(blockContent, props, name) {
+async function fetchBlockContent(figId, id, figmaUrl, CONFIGS) {
+    const options = {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: CONFIGS.figmaAuthToken // add a valid token
+        },
+        body: JSON.stringify({ figmaUrl: figmaUrl, figId: figId, id: id}) 
+      };
+      
+      const response = await fetch(CONFIGS.figmaBlockContentUrl, options)
+
+      if (!response.ok) {
+        return {};
+      }
+
+      const mapping = await response.json();
+      return mapping;
+}
+
+function mapFigmaContent(blockContent, props, name, figContent) {
     console.log('inside mapFigmaContent');
     // const elements = getLevelElements(blockContent);
     switch(name){
         case 'marquee': 
-            mapMarqueeContent(blockContent);
+            mapMarqueeContent(blockContent, figContent);
             break;
         case 'text':
-            mapTextContent(blockContent);
+            mapTextContent(blockContent, figContent);
             break;
         default:
             break;
