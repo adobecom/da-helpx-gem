@@ -1,4 +1,6 @@
 import {fetchFromStorage, pushToStorage} from '../store.js';
+import { mapMarqueeContent } from '../blocks/marquee.js';
+import { mapTextContent } from '../blocks/text.js';
 
 export async function fetchFigmaContent(figmaUrl, CONFIGS) {
     let html = fetchFromStorage(figmaUrl);
@@ -55,27 +57,59 @@ async function createHTML(blocks) {
         if (obj.id !== null && obj.path !== null) {
             console.log('foudn a valid block with id: ', obj.id);
             const doc = await fetchContent(obj.path, obj.id);
-            const blockContent = getHtml(doc, obj.id);
+            let blockContent = getHtml(doc, obj.id, obj.variant);
 
             // map the figma content before rendering
-            mapFigmaContent(blockContent, obj.properties);
-
+            blockContent = mapFigmaContent(blockContent, obj.properties, obj.id);
             if (blockContent !== null) {
-                html += getHtml(doc, obj.id).outerHTML;
+                html += blockContent.outerHTML;
             }
         }
     }
     return html;
 }
 
-function mapFigmaContent(blockContent, props) {
+function mapFigmaContent(blockContent, props, name) {
     console.log('inside mapFigmaContent');
+    // const elements = getLevelElements(blockContent);
+    switch(name){
+        case 'marquee': 
+            mapMarqueeContent(blockContent);
+            break;
+        case 'text':
+            mapTextContent(blockContent);
+            break;
+        default:
+            break;
+    }
+
+    return blockContent;
 }
 
-function getHtml(resp, id) {
+function getLevelElements(parent) {
+    const levelElements = [];
+    
+    // Recursively find all non-div child elements
+    function findElements(node) {
+        node.childNodes.forEach(child => {
+            if (child.nodeType === Node.ELEMENT_NODE && child.tagName.toLowerCase() !== 'div') {
+                levelElements.push(child);
+            }
+            // Recurse if the child is an element (including div)
+            if (child.nodeType === Node.ELEMENT_NODE && child.nodeType !== 'picture') {
+                findElements(child);
+            }
+        });
+    }
+    
+    findElements(parent);
+    return levelElements;
+}
+
+function getHtml(resp, id, variant) {
     const parser = new DOMParser();
     const doc = parser.parseFromString(resp, 'text/html');
-    return doc.querySelector("." + id);
+    return doc.querySelectorAll("." + id)[variant];
 }
 
 
