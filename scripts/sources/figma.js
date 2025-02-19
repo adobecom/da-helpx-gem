@@ -25,25 +25,8 @@ async function getFigmaContent(figmaUrl, CONFIGS) {
 
 function fixRelativeLinks(html) {
     let updatedHtml = html.replaceAll("./media","https://main--milo--adobecom.hlx.page/media");
-    // updatedHtml =  replaceRelativeHrefs(updatedHtml);
     return updatedHtml;
 }
-
-function replaceRelativeHrefs(htmlString) {
-    const parser = new DOMParser();
-    const doc = parser.parseFromString(htmlString, 'text/html');
-    const baseUrl = 'https://main--milo--adobecom.hlx.page';
-
-    doc.querySelectorAll('a[href]').forEach((anchor) => {
-        const href = anchor.getAttribute('href');
-        if (href && !href.startsWith('http') && !href.startsWith('#')) {
-            anchor.setAttribute('href', baseUrl + href);
-        }
-    });
-
-    return doc.body.innerHTML;
-}
-
 
 async function fetchFigmaMapping(figmaUrl, CONFIGS) {
     const options = {

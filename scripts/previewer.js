@@ -34,25 +34,16 @@ async function initPreviewer() {
 
     // handle the content injection and WYSIWYG editor painting
     await initiatePreviewer(source, contentUrl, editable, target, targetUrl);
-    await persist();
+    await persist(source, contentUrl, target, targetUrl);
 }
 
-export async function persist() {
-    const source = getQueryParam('source');
-    const contentUrl = getQueryParam('contentUrl');
-    const target = getQueryParam('target');
-    const targetUrl = getQueryParam('targetUrl');
-
-    if (!source || !contentUrl || !target || !targetUrl) {
-        throw new Error("Source, content Url, target url or target cannot be empty! Stoppping all processing!");
-    }
-
+export async function persist(source, contentUrl, target, targetUrl) {
     await persistOnTarget(contentUrl, target, targetUrl, CONFIGS);
     console.log('Successfully persisted on DA');
 }
 
 async function initiatePreviewer(source, contentUrl, editable, target, targetUrl) {
-    let html = "";
+    let html = '';
     if (source === 'figma') {
         html = await fetchFigmaContent(contentUrl, CONFIGS);
     }
