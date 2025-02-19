@@ -28,6 +28,7 @@ async function initPreviewer() {
     const targetUrl = getQueryParam('targetUrl');
     const token = getQueryParam('token');
     CONFIGS.figmaAuthToken = 'Bearer ' + token;
+    CONFIGS.daToken = 'Bearer ' + token;
 
     if (!source || !contentUrl || !target || !targetUrl) {
         throw new Error("Source, content Url, target url or target cannot be empty! Stoppping all processing!");
@@ -35,7 +36,7 @@ async function initPreviewer() {
 
     // handle the content injection and WYSIWYG editor painting
     await initiatePreviewer(source, contentUrl, editable, target, targetUrl);
-    await persist(source, contentUrl, target, targetUrl);
+    // await persist(source, contentUrl, target, targetUrl);
 }
 
 export async function persist(source, contentUrl, target, targetUrl) {
@@ -49,15 +50,14 @@ async function initiatePreviewer(source, contentUrl, editable, target, targetUrl
         html = await fetchFigmaContent(contentUrl, CONFIGS);
     }
 
-    // html = targetCompatibleHtml(html, target, targetUrl, CONFIGS);
+    targetCompatibleHtml(html, target, targetUrl, CONFIGS);
 
     if (editable && html) {
         html = renderEditableHtml(html);
     }
 
-    html += `<a href="#" class="cta-button">Push to DA</a>`;
+    paintHtmlOnPage(html, source, contentUrl, target, targetUrl);
 
-    paintHtmlOnPage(html);
 
     // finally call the Milo loadarea function to paint the WYSIWYG page
     document.querySelector('head').innerHTML += '<meta name="martech" content="off">';
@@ -67,12 +67,22 @@ async function initiatePreviewer(source, contentUrl, editable, target, targetUrl
     await loadArea();
 }
 
-function paintHtmlOnPage(html) {
+function paintHtmlOnPage(html, source, contentUrl, target, targetUrl) {
     const mainEle = document.createElement('main');
     const wrappingDiv = document.createElement('div');
     wrappingDiv.innerHTML = html;
     mainEle.appendChild(wrappingDiv);
     document.body.appendChild(mainEle);
+
+    const pushToDABtn = document.createElement('a');
+    pushToDABtn.href = '#';
+    pushToDABtn.classList.add('cta-button');
+    pushToDABtn.innerHTML = 'Push to DA';
+
+    document.body.append(pushToDABtn);
+    pushToDABtn.addEventListener('click', async () => {
+        await persist(source, contentUrl, target, targetUrl);
+    });
 }
 
 // TODO: manage error handling

@@ -2,7 +2,7 @@ export function getDACompatibleHtml(html) {
     console.log('inside da get da compatible html');
     html = replacePictureWithImg(html);
     html = html.replaceAll('\n', '');
-    html = html.replaceAll('"', '');
+    html = html.replaceAll('"', "'");
     html = html.replaceAll('alt= ','');
     return html;
 }

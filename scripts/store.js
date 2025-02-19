@@ -1,25 +1,9 @@
 export function fetchFromStorage(contentUrl) {
-    const editorHtml = window.sessionStorage.getItem('editor-html');
-    let html = "";
-    if (editorHtml !== null) {
-        const editorHtmlJson = JSON.parse(editorHtml);
-        if (editorHtmlJson.url === contentUrl) {
-            html = editorHtmlJson.html;
-        }
-    }
-    return html;
+    return window.sessionStorage.getItem('targetHtml');
 }
 
 export function fetchTargetHtmlFromStorage(contentUrl) {
-    const editorHtml = window.sessionStorage.getItem('editor-html');
-    let html = "";
-    if (editorHtml !== null) {
-        const editorHtmlJson = JSON.parse(editorHtml);
-        if (editorHtmlJson.url === contentUrl) {
-            html = editorHtmlJson.targetHtml;
-        }
-    }
-    return html;
+    return window.sessionStorage.getItem('targetHtml');
 }
 
 export function pushToStorage(obj) {
@@ -35,9 +19,5 @@ export function pushEditableHtmlToSTore(editableHtml) {
 }
 
 export function pushTargetHtmlToSTore(html) {
-    if (window.sessionStorage.getItem('editor-html')) {
-        const json = JSON.parse(window.sessionStorage.getItem('editor-html'));
-        json.targetHtml = html;
-        window.sessionStorage.setItem('editor-html', JSON.stringify(json));
-    }
+    window.sessionStorage.setItem('targetHtml', html);
 }
