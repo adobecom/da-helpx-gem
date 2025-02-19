@@ -61,7 +61,7 @@ async function createHTML(blocks) {
 
             // map the figma content before rendering
             blockContent = mapFigmaContent(blockContent, obj.properties, obj.id);
-            if (blockContent !== null) {
+            if (blockContent !== null && blockContent !== undefined) {
                 html += blockContent.outerHTML;
             }
         }
