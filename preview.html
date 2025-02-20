@@ -42,7 +42,14 @@
         box-shadow: 0 4px 6px rgba(0, 123, 255, 0.2);
         text-align: center;
         width: fit-content;
-        margin: 20px auto; /* Centers horizontally and adds top-bottom padding */
+        margin: 20px auto;
+        position: fixed;
+        z-index: 1000;
+        top: 0px;
+        right: 20px;
+        display: flex;
+        align-items: center;
+        gap: 10px;
       }
 
       .cta-button:hover {

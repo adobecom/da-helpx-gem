@@ -77,7 +77,7 @@ function paintHtmlOnPage(html, source, contentUrl, target, targetUrl) {
     const pushToDABtn = document.createElement('a');
     pushToDABtn.href = '#';
     pushToDABtn.classList.add('cta-button');
-    pushToDABtn.innerHTML = 'Push to DA';
+    pushToDABtn.innerHTML = '<span><img height="24px" width="24px" src="https://da.live/blocks/edit/img/Smock_Send_18_N.svg"></span>Push to DA';
 
     document.body.append(pushToDABtn);
     pushToDABtn.addEventListener('click', async () => {
