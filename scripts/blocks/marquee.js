@@ -11,10 +11,10 @@ export function mapMarqueeContent(blockContent, figContent) {
         switch(k) {
         case  "background":
             if (!x.background.startsWith('http')) {
-            const p = blockContent.querySelector(':scope div div');
-            p.innerHTML = x.background;
+                const p = blockContent.querySelector(':scope div div');
+                p.innerHTML = x.background;
             } else {
-            blockContent.querySelector('div picture img').src = x.background;
+                blockContent.querySelector('div picture img').src = x.background;
             }
             break;
         case  "foregroundImage":
@@ -31,8 +31,15 @@ export function mapMarqueeContent(blockContent, figContent) {
             blockContent.querySelector('h1 + p').innerHTML = x.body;
             break;
         case  "actions":
-            blockContent.querySelector('a strong, strong a').innerHTML = 'Buy Now';
-            blockContent.querySelector('a em, em a').innerHTML = 'Free Trial';
+            if (x.actions) {
+                blockContent.querySelector('a strong, strong a').innerHTML = 'Buy Now';
+                blockContent.querySelector('a em, em a').innerHTML = 'Free Trial';
+            } else {
+                const primaryBtn = blockContent.querySelector('a strong, strong a');
+                const secBtn = blockContent.querySelector('a em, em a');
+                primaryBtn.remove();
+                secBtn.remove();
+            }
             break;
         }
     });
