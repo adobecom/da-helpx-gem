@@ -1,5 +1,5 @@
 export function mapMediaContent(blockContent, figContent) {
-
+    blockContent.classList.remove('small');
     const x = figContent?.details?.properties;
 
     if (!x) return;
