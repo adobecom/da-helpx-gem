@@ -1,6 +1,7 @@
 import {fetchFromStorage, pushToStorage} from '../store.js';
 import { mapMarqueeContent } from '../blocks/marquee.js';
 import { mapTextContent } from '../blocks/text.js';
+import {mapMediaContent} from "../blocks/media.js";
 
 export async function fetchFigmaContent(figmaUrl, CONFIGS) {
     const html = await getFigmaContent(figmaUrl, CONFIGS);
@@ -96,6 +97,9 @@ function mapFigmaContent(blockContent, props, name, figContent) {
             break;
         case 'text':
             mapTextContent(blockContent, figContent);
+            break;
+        case 'media':
+            mapMediaContent(blockContent, figContent);
             break;
         default:
             break;

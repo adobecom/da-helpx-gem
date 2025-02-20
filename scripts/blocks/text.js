@@ -1,12 +1,6 @@
 export function mapTextContent(blockContent, figContent) {
 
-    const x = {
-        "detail":"",
-        "title":"",
-        "heading":"Solve font mysteries, fast.",
-        "body":"Retype is integrated with Adobe Fonts and quickly searches a library of over 30,000 typefaces to find you the perfect font for every project.",
-        "actions":false,
-    };
+    const x = figContent?.details?.properties;
 
     const ks = Object.keys(x);
     ks.forEach((k) => {
