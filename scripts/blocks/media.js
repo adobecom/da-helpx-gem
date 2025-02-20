@@ -1,14 +1,6 @@
 export function mapMediaContent(blockContent, figContent) {
 
-    const x = {
-        "layout":"right content",
-        "foregroundImage": "https://s3-alpha-sig.figma.com/img/6ef4/1851/74bc530e2d9afcfbc5a58e126ed722ff?Expires=1740960000&Key-Pair-Id=APKAQ4GOSFWCW27IBOMQ&Signature=CZIZUVwmtlenJ4MG~rSYOR8OhKr3b3pYLKJ5R7F96AzN0-kBwsNMH7P3U1w7nFljGOvGZ4atA~eWaYsEZKEpFABE44AA9lyviTexobVfygu9AKVNbRIjXbdGLZdAmarxKp8kYnuSRyKpZPcQ~623qP~h~l51Q-ZyhMWIlviZn~plLQMlHMxGcrVBe6~ggLWS5o42ZUGlWF~rbQMZXUrTgOFAWLtmlhSFSi-Vaxtt8nNYx-Cb9iIWCiAQbHwaP98ly9qO4zGchMtEhlaSesiC4WJ4vfmUjZwjL~ozM43ztNNwpY-oLyk3dxcc-xUao9kOaLL5Zlb9DPXyKrsSP~lOCQ__",
-        "detail":"this is the detail",
-        "body":"this is the body",
-        "heading": "this is the heading",
-        "action": false,
-        "action2": false,
-    };
+    const x = figContent?.details?.properties;
 
     if (!x) return;
 
