@@ -30,7 +30,7 @@ function replacePictureWithImg(htmlString) {
 export async function postData(url, html, CONFIGS) {
     html = wrapHTMLForDA(html);
     try {
-        const response = await fetch(url + ".html", {
+        const response = await fetch('https://admin.da.live/source/' + url + ".html", {
             method: "POST",
             headers: {
                 "Authorization": `Bearer ${CONFIGS.daToken}`,
