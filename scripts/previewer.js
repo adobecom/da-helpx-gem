@@ -59,6 +59,7 @@ async function initiatePreviewer(source, contentUrl, editable, target, targetUrl
     paintHtmlOnPage(html, source, contentUrl, target, targetUrl);
 
 
+    window["page-load-ok-milo"].remove();
     // finally call the Milo loadarea function to paint the WYSIWYG page
     document.querySelector('head').innerHTML += '<meta name="martech" content="off">';
     const { loadArea } = await import(
