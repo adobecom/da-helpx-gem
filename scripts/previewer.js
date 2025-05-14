@@ -68,22 +68,23 @@ async function initiatePreviewer(source, contentUrl, editable, target, targetUrl
     await loadArea();
 }
 
-function paintHtmlOnPage(html, source, contentUrl, target, targetUrl) {
+async function paintHtmlOnPage(html, source, contentUrl, target, targetUrl) {
     const mainEle = document.createElement('main');
     const wrappingDiv = document.createElement('div');
     wrappingDiv.innerHTML = html;
     mainEle.appendChild(wrappingDiv);
     document.body.appendChild(mainEle);
 
-    const pushToDABtn = document.createElement('a');
-    pushToDABtn.href = '#';
-    pushToDABtn.classList.add('cta-button');
-    pushToDABtn.innerHTML = '<span><img height="24px" width="24px" src="https://da.live/blocks/edit/img/Smock_Send_18_N.svg"></span>Push to DA';
+    // const pushToDABtn = document.createElement('a');
+    // pushToDABtn.href = '#';
+    // pushToDABtn.classList.add('cta-button');
+    // pushToDABtn.innerHTML = '<span><img height="24px" width="24px" src="https://da.live/blocks/edit/img/Smock_Send_18_N.svg"></span>Push to DA';
 
     document.body.append(pushToDABtn);
-    pushToDABtn.addEventListener('click', async () => {
-        await persist(source, contentUrl, target, targetUrl);
-    });
+    await persist(source, contentUrl, target, targetUrl);
+    // pushToDABtn.addEventListener('click', async () => {
+    //     await persist(source, contentUrl, target, targetUrl);
+    // });
 }
 
 // TODO: manage error handling
