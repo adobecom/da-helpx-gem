@@ -3,7 +3,7 @@ export const [setLibs, getLibs] = (() => {
   return [
     (prodLibs, location) => {
       libs = (() => {
-        return 'https://main--milo--adobecom.hlx.live/libs';
+        return 'https://main--milo--adobecom.aem.live/libs';
         const { hostname, search } = location || window.location;
         if (!(hostname.includes('.aem.') || hostname.includes('local')))
           return prodLibs;

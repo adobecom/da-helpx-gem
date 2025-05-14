@@ -22,7 +22,7 @@ async function getFigmaContent(figmaUrl, CONFIGS) {
 }
 
 function fixRelativeLinks(html) {
-    let updatedHtml = html.replaceAll("./media","https://main--milo--adobecom.hlx.page/media");
+    let updatedHtml = html.replaceAll("./media","https://main--milo--adobecom.aem.page/media");
     return updatedHtml;
 }
 

@@ -62,7 +62,7 @@ async function initiatePreviewer(source, contentUrl, editable, target, targetUrl
     // finally call the Milo loadarea function to paint the WYSIWYG page
     document.querySelector('head').innerHTML += '<meta name="martech" content="off">';
     const { loadArea } = await import(
-        `https://main--milo--adobecom.hlx.live/libs/utils/utils.js`
+        `https://main--milo--adobecom.aem.live/libs/utils/utils.js`
       );
     await loadArea();
 }
