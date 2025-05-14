@@ -81,7 +81,13 @@ async function paintHtmlOnPage(html, source, contentUrl, target, targetUrl) {
     // pushToDABtn.innerHTML = '<span><img height="24px" width="24px" src="https://da.live/blocks/edit/img/Smock_Send_18_N.svg"></span>Push to DA';
 
     await persist(source, contentUrl, target, targetUrl);
-    window.location.href = `https://da.live/edit#/${targetUrl}`
+
+    const message = { daUrl: `https://da.live/edit#/${targetUrl}` };
+
+    // Send the message to the parent window
+    window.parent.postMessage(message, '*');
+
+    // window.location.href = `https://da.live/edit#/${targetUrl}`
     // pushToDABtn.addEventListener('click', async () => {
     //     await persist(source, contentUrl, target, targetUrl);
     // });
