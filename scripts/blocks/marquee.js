@@ -12,15 +12,19 @@ export function mapMarqueeContent(blockContent, figContent) {
         case  "background":
             if (!x.background.startsWith('http')) {
                 const p = blockContent.querySelector(':scope div div');
-                p.innerHTML = x.background;
+                if (p) {
+                  p.innerHTML = x.background;
+                }
             } else {
                 blockContent.querySelector('div picture img').src = x.background;
             }
             break;
         case  "foregroundImage":
             const a = blockContent.querySelectorAll(':scope > div')[1].querySelectorAll(':scope > div')[1];
-            a.querySelector('img').src = x.foregroundImage;
-            a.querySelectorAll('div picture source').forEach((s) => {s.srcset = x.foregroundImage;});
+            if (a && x) {
+              a.querySelector('img').src = x.foregroundImage;
+              a.querySelectorAll('div picture source').forEach((s) => {s.srcset = x.foregroundImage;});
+            }
             break;
         case  "heading":
             blockContent.querySelector('h1').innerHTML = x.heading;
@@ -32,8 +36,12 @@ export function mapMarqueeContent(blockContent, figContent) {
             break;
         case  "actions":
             if (x.actions) {
+              if (blockContent.querySelector('a strong, strong a')) {
                 blockContent.querySelector('a strong, strong a').innerHTML = 'Buy Now';
+              }
+              if (blockContent.querySelector('a em, em a')) {
                 blockContent.querySelector('a em, em a').innerHTML = 'Free Trial';
+              }
             } else {
                 const primaryBtn = blockContent.querySelector('a strong, strong a');
                 const secBtn = blockContent.querySelector('a em, em a');
