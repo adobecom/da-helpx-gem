@@ -2,7 +2,7 @@ import {fetchFigmaContent} from './sources/figma.js';
 import {renderEditableHtml} from './editor.js';
 import {targetCompatibleHtml} from './target.js';
 import {persistOnTarget} from './target.js';
-import {mapGenerativeContent} from './generativeContent.js';
+import {mapGenerativeContent} from './sources/generativeContent.js';
 
 const CONFIGS = {
     'figmaMappingUrl': 'https://440859-genesis-dev.adobeio-static.net/api/v1/web/genesis-aio/fig-comps',
