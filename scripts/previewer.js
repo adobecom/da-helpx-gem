@@ -41,7 +41,7 @@ async function initPreviewer() {
 
     let context = null;
     if (window.stream && window.stream.chat && window.stream.chat.context) {
-        context = window.stream.chat.context;
+        context = window.stream?.chat?.context;
     }
 
     if (!source || !contentUrl || !target || !targetUrl) {
@@ -54,11 +54,11 @@ async function initPreviewer() {
 }
 
 export async function persist(source, contentUrl, target, targetUrl) {
-    await persistOnTarget(contentUrl, target, targetUrl, CONFIGS, context);
+    await persistOnTarget(contentUrl, target, targetUrl, CONFIGS);
     console.log('Successfully persisted on DA');
 }
 
-async function initiatePreviewer(source, contentUrl, editable, target, targetUrl) {
+async function initiatePreviewer(source, contentUrl, editable, target, targetUrl, context) {
     let html = '';
     if (source === 'figma') {
         html = await fetchFigmaContent(contentUrl, CONFIGS);
