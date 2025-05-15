@@ -45,7 +45,7 @@ export async function postData(url, html, CONFIGS) {
 
         const result = await response.json();
         console.log('Response:', JSON.stringify(result));
-        window.open(result.source.editUrl, '_blank');
+        // window.open(result.source.editUrl, '_blank');
     } catch (error) {
         console.error("Error:", error);
     }
