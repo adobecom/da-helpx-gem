@@ -1,4 +1,3 @@
-import {fetchFromStorage, pushToStorage} from '../store.js';
 import { mapMarqueeContent } from '../blocks/marquee.js';
 import { mapTextContent } from '../blocks/text.js';
 import {mapMediaContent} from "../blocks/media.js";
@@ -47,25 +46,50 @@ async function fetchFigmaMapping(figmaUrl, CONFIGS) {
 }
 
 async function createHTML(blocks, figmaUrl, CONFIGS) {
-    let html = "";
-    for (let i=0; i< blocks.length; i++) {
-        const obj = blocks[i];
-        if (obj.id !== null && obj.path !== null) {
-            console.log('foudn a valid block with id: ', obj.id);
-            const doc = await fetchContent(obj.path, obj.id);
-            let blockContent = getHtml(doc, obj.id, obj.variant);
+    // let html = "";
+    // for (let i=0; i< blocks.length; i++) {
+    //     const obj = blocks[i];
+    //     if (obj.id !== null && obj.path !== null) {
+    //         console.log('foudn a valid block with id: ', obj.id);
+    //         const doc = await fetchContent(obj.path, obj.id);
+    //         let blockContent = getHtml(doc, obj.id, obj.variant);
 
-            // get block figma content
-            const figContent = await fetchBlockContent(obj.figId, obj.id, figmaUrl, CONFIGS);
+    //         // get block figma content
+    //         const figContent = await fetchBlockContent(obj.figId, obj.id, figmaUrl, CONFIGS);
 
-            // map the figma content before rendering
-            blockContent = mapFigmaContent(blockContent, obj.properties, obj.id, figContent);
-            if (blockContent !== null && blockContent !== undefined) {
-                html += blockContent.outerHTML;
+    //         // map the figma content before rendering
+    //         blockContent = mapFigmaContent(blockContent, obj.properties, obj.id, figContent);
+    //         if (blockContent !== null && blockContent !== undefined) {
+    //             html += blockContent.outerHTML;
+    //         }
+    //     }
+    // }
+    // return html;
+
+    const htmlParts = await Promise.all(
+        blocks.map(async (obj) => {
+            if (obj.id !== null && obj.path !== null) {
+                console.log('found a valid block with id: ', obj.id);
+
+                // Fetch doc and figContent in parallel
+                const [doc, figContent] = await Promise.all([
+                    fetchContent(obj.path, obj.id),
+                    fetchBlockContent(obj.figId, obj.id, figmaUrl, CONFIGS)
+                ]);
+
+                let blockContent = getHtml(doc, obj.id, obj.variant);
+
+                // Map figma content
+                blockContent = mapFigmaContent(blockContent, obj.properties, obj.id, figContent);
+
+                return blockContent?.outerHTML || '';
             }
-        }
-    }
-    return html;
+            return ''; // If id or path is null, return empty string
+        })
+    );
+
+    // Join all HTML parts in order
+    return htmlParts.join('');
 }
 
 async function fetchBlockContent(figId, id, figmaUrl, CONFIGS) {
