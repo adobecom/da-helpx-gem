@@ -63,20 +63,20 @@ async function initiatePreviewer(source, contentUrl, editable, target, targetUrl
     if (source === 'figma') {
         html = await fetchFigmaContent(contentUrl, CONFIGS);
     }
-
+    document.querySelector("#loader-content").innerText = "Mapping blocks ...";
     targetCompatibleHtml(html, target, targetUrl, CONFIGS);
-    window["loader-content"].innerHTML = "Mapping blocks ...";
+    console.log(document.querySelector("#loader-content"))
     if (editable && html) {
         html = renderEditableHtml(html);
     }
 
     if (CONTEXT) {
-        window["loader-content"].innerHTML = "Generating text ...";
+        document.querySelector("#loader-content").innerText = "Generating text ...";
         window.addEventListener("message", async (e) => {
           const eventData = e.data;
           if (e.data.hasOwnProperty('generativeContent')) {
             html = await mapGenerativeContent(html, eventData.generativeContent);
-            window["loader-content"].innerHTML = "Rendering Blocks ...";
+            document.querySelector("#loader-content").innerText = "Rendering Blocks ...";
             startHTMLPainting(html, source, contentUrl, target, targetUrl);
           }
       }, '*');

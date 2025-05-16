@@ -8,6 +8,6 @@ export async function mapGenerativeContent(html, generativeContent) {
       await delay(2000);
       console.log("Executed after 2 seconds");
     }
-    run();
+    await run();
     return html;
 }
