@@ -63,7 +63,7 @@ async function initiatePreviewer(source, contentUrl, editable, target, targetUrl
     if (source === 'figma') {
         html = await fetchFigmaContent(contentUrl, CONFIGS);
     }
-    document.querySelector("#loader-content").innerText = "Mapping blocks ";
+    document.querySelector("#loader-content").innerText = "Generating HTML ";
     targetCompatibleHtml(html, target, targetUrl, CONFIGS);
     if (editable && html) {
         html = renderEditableHtml(html);
