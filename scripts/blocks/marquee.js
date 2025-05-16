@@ -52,3 +52,21 @@ export function mapMarqueeContent(blockContent, figContent) {
         }
     });
 }
+
+export function changeMarqueeContent(html, blockEl, newContent) {
+    const ks = Object.keys(newContent);
+    ks.forEach((k) => {
+        switch(k) {
+        case "heading":
+            const h = blockEl?.querySelector('h1, h2, h3, h4, h5');
+            if (h) h.innerText = newContent["heading"];
+            break;
+        case "body":
+          debugger
+            const b = blockEl?.querySelector(':scope > div:nth-child(2) h1 + p');
+            if (b) b.innerText = newContent["body"];
+            break;
+        }
+    });
+    return html;
+}

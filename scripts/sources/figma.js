@@ -3,30 +3,36 @@ import { mapTextContent } from '../blocks/text.js';
 import {mapMediaContent} from "../blocks/media.js";
 
 export async function fetchFigmaContent(figmaUrl, CONFIGS) {
-    const html = await getFigmaContent(figmaUrl, CONFIGS);
-    window.sessionStorage.setItem('previewer-html', html);
-    return html;
+    const htmlAndMapping = await getFigmaContent(figmaUrl, CONFIGS);
+    // window.sessionStorage.setItem('previewer-html', htmlAndMapping.html);
+    return htmlAndMapping;
 }
 
 async function getFigmaContent(figmaUrl, CONFIGS) {
     const blockMapping = await fetchFigmaMapping(figmaUrl, CONFIGS);
     let html = "";
 
-    if (blockMapping !== null && blockMapping.details !== undefined && blockMapping.details.components !== undefined) {
-        html = await createHTML(blockMapping.details.components, figmaUrl, CONFIGS);
-        html = fixRelativeLinks(html);
+    if (blockMapping?.details?.components) {
+        html = await createHTML(blockMapping, figmaUrl, CONFIGS);
+        // html = fixRelativeLinks(html);
         // pushToStorage({'url': figmaUrl, 'html': html});
     }
+
+    let blockNames = "";
+    blockMapping.details.components.forEach((b) => {
+      blockNames += `
+            - ${b.name}`;
+    });
+    
     window.parent.postMessage({
-      blockList: blockMapping.details.components,
+      blockList: blockNames,
     }, '*');
-    return html;
+    return {
+      html,
+      blockMapping
+    };
 }
 
-function fixRelativeLinks(html) {
-    let updatedHtml = html.replaceAll("./media","https://main--milo--adobecom.aem.page/media");
-    return updatedHtml;
-}
 
 async function fetchFigmaMapping(figmaUrl, CONFIGS) {
     const options = {
@@ -48,7 +54,8 @@ async function fetchFigmaMapping(figmaUrl, CONFIGS) {
       return mapping;
 }
 
-async function createHTML(blocks, figmaUrl, CONFIGS) {
+async function createHTML(blockMapping, figmaUrl, CONFIGS) {
+  const blocks = blockMapping.details.components;
     // let html = "";
     // for (let i=0; i< blocks.length; i++) {
     //     const obj = blocks[i];
@@ -82,18 +89,20 @@ async function createHTML(blocks, figmaUrl, CONFIGS) {
                 ]);
 
                 let blockContent = getHtml(doc, obj.id, obj.variant);
-
+                
                 // Map figma content
                 blockContent = mapFigmaContent(blockContent, obj.properties, obj.id, figContent);
-
-                return blockContent?.outerHTML || '';
+                obj.blockDomEl = blockContent;
+                if (blockContent) return blockContent
+                else return '';
             }
             return ''; // If id or path is null, return empty string
         })
     );
 
     // Join all HTML parts in order
-    return htmlParts.join('');
+    // return htmlParts.join('');
+    return htmlParts;
 }
 
 async function fetchBlockContent(figId, id, figmaUrl, CONFIGS) {

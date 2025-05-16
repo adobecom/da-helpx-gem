@@ -58,31 +58,47 @@ export async function persist(source, contentUrl, target, targetUrl) {
     console.log('Successfully persisted on DA');
 }
 
+function fixRelativeLinks(html) {
+    let updatedHtml = html.replaceAll("./media","https://main--milo--adobecom.aem.page/media");
+    return updatedHtml;
+}
+
 async function initiatePreviewer(source, contentUrl, editable, target, targetUrl, context) {
     let html = '';
+    let blockMapping = '';
     if (source === 'figma') {
-        html = await fetchFigmaContent(contentUrl, CONFIGS);
+        const pageComponents = await fetchFigmaContent(contentUrl, CONFIGS);
+        html = pageComponents.html;
+        blockMapping = pageComponents.blockMapping;
     }
     document.querySelector("#loader-content").innerText = "Generating HTML ";
-    targetCompatibleHtml(html, target, targetUrl, CONFIGS);
-    if (editable && html) {
-        html = renderEditableHtml(html);
-    }
 
     if (CONTEXT) {
         document.querySelector("#loader-content").innerText = "Generating text ";
         window.addEventListener("message", async (e) => {
           const eventData = e.data;
           if (e.data.hasOwnProperty('generativeContent')) {
-            html = await mapGenerativeContent(html, eventData.generativeContent);
+            await mapGenerativeContent(html, blockMapping, eventData.generativeContent);
+            html = html.map((h) => h.outerHTML).join('');
+            html = fixRelativeLinks(html);
             document.querySelector("#loader-content").innerText = "Rendering Blocks ";
             startHTMLPainting(html, source, contentUrl, target, targetUrl);
             document.querySelector("#loader-container").remove();
+            targetCompatibleHtml(html, target, targetUrl, CONFIGS);
+            if (editable && html) {
+                html = renderEditableHtml(html);
+            }
           }
       }, '*');
     } else {
+      html = html.map((h) => h.outerHTML).join('');
+      html = fixRelativeLinks(html);
       startHTMLPainting(html, source, contentUrl, target, targetUrl);
       document.querySelector("#loader-container").remove();
+      targetCompatibleHtml(html, target, targetUrl, CONFIGS);
+      if (editable && html) {
+          html = renderEditableHtml(html);
+      }
     }
 }
 
