@@ -77,10 +77,12 @@ async function initiatePreviewer(source, contentUrl, editable, target, targetUrl
             html = await mapGenerativeContent(html, eventData.generativeContent);
             document.querySelector("#loader-content").innerText = "Rendering Blocks ";
             startHTMLPainting(html, source, contentUrl, target, targetUrl);
+            document.querySelector("#loader-container").remove();
           }
       }, '*');
     } else {
       startHTMLPainting(html, source, contentUrl, target, targetUrl);
+      document.querySelector("#loader-container").remove();
     }
 }
 
