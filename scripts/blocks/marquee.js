@@ -62,7 +62,6 @@ export function changeMarqueeContent(html, blockEl, newContent) {
             if (h) h.innerText = newContent["heading"];
             break;
         case "body":
-          debugger
             const b = blockEl?.querySelector(':scope > div:nth-child(2) h1 + p');
             if (b) b.innerText = newContent["body"];
             break;
