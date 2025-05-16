@@ -65,7 +65,6 @@ async function initiatePreviewer(source, contentUrl, editable, target, targetUrl
     }
     document.querySelector("#loader-content").innerText = "Mapping blocks ";
     targetCompatibleHtml(html, target, targetUrl, CONFIGS);
-    console.log(document.querySelector("#loader-content"))
     if (editable && html) {
         html = renderEditableHtml(html);
     }
