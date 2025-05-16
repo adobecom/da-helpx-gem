@@ -17,6 +17,9 @@ async function getFigmaContent(figmaUrl, CONFIGS) {
         html = fixRelativeLinks(html);
         // pushToStorage({'url': figmaUrl, 'html': html});
     }
+    window.parent.postMessage({
+      blockList: blockMapping.details.components,
+    }, '*');
     return html;
 }
 

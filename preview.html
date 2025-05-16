@@ -6,6 +6,19 @@
     <script src="./scripts/preview.js" type="module"></script>
 
     <style>
+    
+      .loader-container {
+        position: absolute;
+        left: 50%;
+        bottom: 50%;
+        display: flex;
+        align-items: center;
+        flex-direction: column;
+        gap: 24px;
+        font-size: 20px;
+        color: #7155fa;
+      }
+
       .loader {
         width: 48px;
         height: 48px;
@@ -15,9 +28,6 @@
         display: inline-block;
         box-sizing: border-box;
         animation: rotation 1s linear infinite;
-        position: absolute;
-        left: 50%;
-        bottom: 50%;
       }
       @keyframes rotation {
         0% {
@@ -29,7 +39,7 @@
       }
       .cta-button {
         display: block; /* Allows margin auto to work */
-        background-color: #007bff; /* Blue */
+        background-color: #7155fa;
         color: white;
         font-size: 18px;
         font-weight: bold;
@@ -61,6 +71,9 @@
     <link rel="icon" href="data:," />
   </head>
   <body>
-    <span class="loader"></span>
+    <div class="loader-container" id="loader-container">
+      <div class="loader-content" id="loader-content">Fetching figma content ...</div>
+      <span class="loader"></span>
+    </div>
   </body>
 </html>
