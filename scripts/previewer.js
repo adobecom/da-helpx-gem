@@ -107,6 +107,25 @@ async function startHTMLPainting(html, source, contentUrl, target, targetUrl) {
     window["page-load-ok-milo"].remove();
     // finally call the Milo loadarea function to paint the WYSIWYG page
     document.querySelector('head').innerHTML += '<meta name="martech" content="off">';
+    const upload = document.createElement('input');
+    upload.type = "file"
+    upload.id = "imgUpload";
+    upload.accept = "image/*";
+    upload.style = "display: none;";
+    document.body.append(upload);
+    let imgTarget = "";
+    document.querySelectorAll("img").forEach((i) => {
+      i.addEventListener('click', (e) => {
+        window["imgUpload"].click();
+        imgTarget = e.target;
+      });
+    });
+    window["imgUpload"].addEventListener('change', () => {
+      const objectUrl = URL.createObjectURL(window["imgUpload"].files[0]);
+      imgTarget.src = objectUrl;
+      const pic = imgTarget.closest('picture');
+      if (pic) pic.querySelectorAll('source').forEach((s) => s.srcset = objectUrl);
+    });
     const { loadArea } = await import(
         `https://main--milo--adobecom.aem.live/libs/utils/utils.js`
       );
