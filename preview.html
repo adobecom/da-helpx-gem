@@ -1,11 +1,29 @@
 <html>
   <head>
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-
     <script src="./scripts/previewer.js" type="module"></script>
     <script src="./scripts/preview.js" type="module"></script>
-
     <style>
+      .loader-container {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex-direction: column;
+        height: 100%;
+        width: 100%;
+        gap: 24px;
+        font-size: 20px;
+        color: #7155fa;
+      }
+
+      .loader-container .loader-row-1 {
+        display: flex;
+        flex-direction: row;
+        justify-content: flex-end;
+        align-items: flex-end;
+        gap: 10px;
+      }
+
       .loader {
         width: 48px;
         height: 48px;
@@ -15,9 +33,6 @@
         display: inline-block;
         box-sizing: border-box;
         animation: rotation 1s linear infinite;
-        position: absolute;
-        left: 50%;
-        bottom: 50%;
       }
       @keyframes rotation {
         0% {
@@ -29,7 +44,7 @@
       }
       .cta-button {
         display: block; /* Allows margin auto to work */
-        background-color: #007bff; /* Blue */
+        background-color: #7155fa;
         color: white;
         font-size: 18px;
         font-weight: bold;
@@ -57,10 +72,57 @@
         box-shadow: 0 6px 10px rgba(0, 123, 255, 0.3);
         transform: scale(1.05);
       }
+
+      .dot-loader {
+        display: flex;
+        gap: 5px;
+        padding-bottom: 6px;
+      }
+
+      .dot {
+        width: 6px;
+        height: 6px;
+        background-color: #7155fa;
+        border-radius: 50%;
+        opacity: 0;
+        animation: blink 1.5s infinite;
+      }
+
+      .dot:nth-child(1) {
+        animation-delay: 0s;
+      }
+
+      .dot:nth-child(2) {
+        animation-delay: 0.3s;
+      }
+
+      .dot:nth-child(3) {
+        animation-delay: 0.6s;
+      }
+
+      @keyframes blink {
+        0%, 100% {
+          opacity: 0;
+        }
+        50% {
+          opacity: 1;
+        }
+      }
+
     </style>
     <link rel="icon" href="data:," />
   </head>
   <body>
-    <span class="loader"></span>
+    <div class="loader-container" id="loader-container">
+      <div class="loader-row-1">
+        <div class="loader-content" id="loader-content">Fetching figma content </div>
+        <div class="dot-loader">
+          <span class="dot"></span>
+          <span class="dot"></span>
+          <span class="dot"></span>
+        </div>
+      </div>
+      <!-- <span class="loader loader-row-2"></span> -->
+    </div>
   </body>
 </html>
