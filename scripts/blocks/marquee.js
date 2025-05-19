@@ -65,6 +65,10 @@ export function changeMarqueeContent(html, blockEl, newContent) {
             const b = blockEl?.querySelector(':scope > div:nth-child(2) h1 + p');
             if (b) b.innerText = newContent["body"];
             break;
+        case "cta":
+            const btn = blockEl?.querySelector(':scope > div:nth-child(2)')?.querySelector('a em, em a, strong a, a strong');
+            if (btn) btn.innerText = newContent["cta"];
+            break;
         }
     });
     return html;
