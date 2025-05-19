@@ -21,6 +21,8 @@ if (storedDaToken && !CONFIGS.daToken) {
   CONFIGS.daToken = storedDaToken;
 }
 
+const msgList = ["Bringing the words to life ", "Fueling the creative engine ", "Spinning up something sharp ", "Crafting brilliance behind the scenes "];
+
 // check if context is present
 window.addEventListener("message", (e) => {
   const eventData = e.data;
@@ -71,17 +73,32 @@ async function initiatePreviewer(source, contentUrl, editable, target, targetUrl
         html = pageComponents.html;
         blockMapping = pageComponents.blockMapping;
     }
-    document.querySelector("#loader-content").innerText = "Generating HTML ";
+    document.querySelector("#loader-content").innerText = "Building your HTML—precision in progress ";
 
     if (CONTEXT) {
-        document.querySelector("#loader-content").innerText = "Generating text ";
+
+        let blockNames = "";
+        blockMapping.details.components.forEach((b) => {
+          blockNames += `
+                - ${b.name}`;
+        });
+        window.parent.postMessage({
+          blockList: blockNames,
+        }, '*');
+
+        setTimeout(() => {
+          if(!msgList.length) return;
+          document.querySelector("#loader-content").innerText = msgList[0];
+          msgList.shift();
+        }, 5000);
+
         window.addEventListener("message", async (e) => {
           const eventData = e.data;
           if (e.data.hasOwnProperty('generativeContent')) {
             await mapGenerativeContent(html, blockMapping, eventData.generativeContent);
             html = html.map((h) => h.outerHTML).join('');
             html = fixRelativeLinks(html);
-            document.querySelector("#loader-content").innerText = "Rendering Blocks ";
+            document.querySelector("#loader-content").innerText = "Bringing blocks to life ";
             startHTMLPainting(html, source, contentUrl, target, targetUrl);
             document.querySelector("#loader-container").remove();
             targetCompatibleHtml(html, target, targetUrl, CONFIGS);
