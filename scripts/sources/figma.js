@@ -67,7 +67,7 @@ async function createHTML(blockMapping, figmaUrl, CONFIGS) {
     // }
     // return html;
 
-    document.querySelector("#loader-content").innerText = "Mapping Blocks ";
+    document.querySelector("#loader-content").innerText = "Building the map—block by block ";
     const htmlParts = await Promise.all(
         blocks.map(async (obj) => {
             if (obj.id !== null && obj.path !== null) {
