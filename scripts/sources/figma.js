@@ -1,6 +1,7 @@
 import { mapMarqueeContent } from '../blocks/marquee.js';
 import { mapTextContent } from '../blocks/text.js';
 import {mapMediaContent} from "../blocks/media.js";
+import {mapNotificationContent} from "../blocks/notification.js";
 
 export async function fetchFigmaContent(figmaUrl, CONFIGS) {
     const htmlAndMapping = await getFigmaContent(figmaUrl, CONFIGS);
@@ -137,6 +138,9 @@ function mapFigmaContent(blockContent, props, name, figContent) {
             break;
         case 'media':
             mapMediaContent(blockContent, figContent);
+            break;
+        case 'notification':
+            mapNotificationContent(blockContent, figContent);
             break;
         default:
             break;
