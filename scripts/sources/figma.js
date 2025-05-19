@@ -163,7 +163,11 @@ function getLevelElements(parent) {
 function getHtml(resp, id, variant) {
     const parser = new DOMParser();
     const doc = parser.parseFromString(resp, 'text/html');
-    return doc.querySelectorAll("." + id)[variant];
+    if (id === 'editorial-card') {
+        return doc.querySelector('div')
+    } else {
+        return doc.querySelectorAll("." + id)[variant];
+    }
 }
 
 

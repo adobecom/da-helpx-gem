@@ -52,5 +52,5 @@ export async function postData(url, html, CONFIGS) {
 }
 
 function wrapHTMLForDA(html) {
-    return "<body><header></header><main><div>" + html + "</div></main><footer></footer>";
+    return "<body><header></header><main>" + html + "</main><footer></footer>";
 }

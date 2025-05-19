@@ -98,6 +98,7 @@ async function initiatePreviewer(source, contentUrl, editable, target, targetUrl
             await mapGenerativeContent(html, blockMapping, eventData.generativeContent);
             html = html.map((h) => h.outerHTML).join('');
             html = fixRelativeLinks(html);
+            html = await wrapDivs(html);
             document.querySelector("#loader-content").innerText = "Bringing blocks to life ";
             startHTMLPainting(html, source, contentUrl, target, targetUrl);
             document.querySelector("#loader-container").remove();
@@ -110,6 +111,7 @@ async function initiatePreviewer(source, contentUrl, editable, target, targetUrl
     } else {
       html = html.map((h) => h.outerHTML).join('');
       html = fixRelativeLinks(html);
+      html = await wrapDivs(html);
       startHTMLPainting(html, source, contentUrl, target, targetUrl);
       document.querySelector("#loader-container").remove();
       targetCompatibleHtml(html, target, targetUrl, CONFIGS);
@@ -149,11 +151,46 @@ async function startHTMLPainting(html, source, contentUrl, target, targetUrl) {
     await loadArea();
 }
 
+async function wrapDivs(htmlString) {
+  const container = document.createElement('div');
+  container.innerHTML = htmlString;
+
+  const children = Array.from(container.children);
+  const newContainer = document.createElement('div');
+  let wrapper = null;
+
+  for (const child of children) {
+    if (child.tagName === 'DIV') {
+      if (child.classList.length > 0) {
+        if (!wrapper) wrapper = document.createElement('div');
+        wrapper.appendChild(child);
+      } else {
+        if (wrapper) {
+          newContainer.appendChild(wrapper);
+          wrapper = null;
+        }
+        newContainer.appendChild(child);
+      }
+    } else {
+      if (wrapper) {
+        newContainer.appendChild(wrapper);
+        wrapper = null;
+      }
+      newContainer.appendChild(child);
+    }
+  }
+
+  if (wrapper) {
+    newContainer.appendChild(wrapper);
+  }
+
+  return newContainer.innerHTML;
+}
+  
+
 async function paintHtmlOnPage(html, source, contentUrl, target, targetUrl) {
     const mainEle = document.createElement('main');
-    const wrappingDiv = document.createElement('div');
-    wrappingDiv.innerHTML = html;
-    mainEle.appendChild(wrappingDiv);
+    mainEle.innerHTML = html;
     document.body.appendChild(mainEle);
 
     const pushToDABtn = document.createElement('a');
