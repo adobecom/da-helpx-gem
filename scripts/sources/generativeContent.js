@@ -1,6 +1,6 @@
 import { changeMarqueeContent } from '../blocks/marquee.js';
-// import { mapTextContent } from '../blocks/text.js';
-// import {mapMediaContent} from "../blocks/media.js";
+import { mapTextContent } from '../blocks/text.js';
+import {mapMediaContent} from "../blocks/media.js";
 
 export async function mapGenerativeContent(html, blockMapping, generativeContent) {
   blockMapping.details.components.forEach((b, idx) => {
