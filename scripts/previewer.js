@@ -74,6 +74,16 @@ async function initiatePreviewer(source, contentUrl, editable, target, targetUrl
     document.querySelector("#loader-content").innerText = "Generating HTML ";
 
     if (CONTEXT) {
+      
+        let blockNames = "";
+        blockMapping.details.components.forEach((b) => {
+          blockNames += `
+                - ${b.name}`;
+        });
+        window.parent.postMessage({
+          blockList: blockNames,
+        }, '*');
+
         document.querySelector("#loader-content").innerText = "Generating text ";
         window.addEventListener("message", async (e) => {
           const eventData = e.data;

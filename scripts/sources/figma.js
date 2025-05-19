@@ -18,15 +18,6 @@ async function getFigmaContent(figmaUrl, CONFIGS) {
         // pushToStorage({'url': figmaUrl, 'html': html});
     }
 
-    let blockNames = "";
-    blockMapping.details.components.forEach((b) => {
-      blockNames += `
-            - ${b.name}`;
-    });
-    
-    window.parent.postMessage({
-      blockList: blockNames,
-    }, '*');
     return {
       html,
       blockMapping
