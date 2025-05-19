@@ -29,6 +29,7 @@ export function mapTextContent(blockContent, figContent) {
     });
     
 }
+
 export function changeTextContent(html, blockEl, newContent) {
     const ks = Object.keys(newContent);
     ks.forEach((k) => {

@@ -8,12 +8,12 @@ export async function mapGenerativeContent(html, blockMapping, generativeContent
         case 'marquee': 
             html = changeMarqueeContent(html, b.blockDomEl, generativeContent[idx]["Marquee"]);
             break;
-        // case 'text':
-        //     mapTextContent(b.blockDomEl, generativeContent[idx]);
-        //     break;
-        // case 'media':
-        //     mapMediaContent(b.blockDomEl, generativeContent[idx]);
-        //     break;
+        case 'text':
+            mapTextContent(html, b.blockDomEl, generativeContent[idx]["Text"]);
+            break;
+        case 'media':
+            mapMediaContent(html, b.blockDomEl, generativeContent[idx]["Media"]);
+            break;
         default:
             break;
     }
