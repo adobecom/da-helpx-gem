@@ -8,7 +8,7 @@ export function mapMediaContent(blockContent, figContent) {
     ks.forEach((k) => {
         switch(k) {
             case "layout":
-                if (x.layout === 'right content') {
+                if (x.layout === 'image - copy') {
                     swapMediaDivs(blockContent);
                 }
                 break;
@@ -78,6 +78,14 @@ export function changeMediaContent(html, blockEl, newContent) {
         case "body":
             const b = blockEl?.querySelector('h1 + p, h2 + p, h3 + p, h4 + p, h5 + p');
             if (b) b.innerText = newContent["body"];
+            break;
+        case "thumbnail":
+            const img = blockEl?.querySelector('img');
+            if (img) {
+              img.src = newContent["thumbnail"]["message"];
+              const pic = img.closest('picture');
+              pic.querySelectorAll("source").forEach((s) => s.srcset = newContent["thumbnail"]["message"]);
+            }
             break;
         }
     });

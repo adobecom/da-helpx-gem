@@ -21,7 +21,20 @@ if (storedDaToken && !CONFIGS.daToken) {
   CONFIGS.daToken = storedDaToken;
 }
 
-const msgList = ["Bringing the words to life ", "Fueling the creative engine ", "Spinning up something sharp ", "Crafting brilliance behind the scenes "];
+const msgList = [
+  "Fueling the creative engine ",
+  "Words are forming. Stand by for brilliance.",
+  "Spinning up something sharp ",
+  "Bringing the words to life ",
+  "Not just loading — creating.",
+  "Crafting brilliance behind the scenes ",
+  "Building bold content as we chat",
+  "Constructing the masterpiece. Stay tuned.",
+  "On it — content coming right up",
+  "Loading genius... please remain calm.",
+  "Ideas loading. Stand by for impact.",
+  "Verbs locked. Nouns loaded. Brilliance imminent."
+];
 
 // check if context is present
 window.addEventListener("message", (e) => {
@@ -86,11 +99,12 @@ async function initiatePreviewer(source, contentUrl, editable, target, targetUrl
           blockList: blockNames,
         }, '*');
 
-        setTimeout(() => {
-          if(!msgList.length) return;
+        function changeLoaderContent() {
           document.querySelector("#loader-content").innerText = msgList[0];
           msgList.shift();
-        }, 5000);
+          if(msgList.length) setTimeout( () => { changeLoaderContent(); }, 15000);
+        }
+        changeLoaderContent();
 
         window.addEventListener("message", async (e) => {
           const eventData = e.data;

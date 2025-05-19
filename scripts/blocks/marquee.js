@@ -69,6 +69,14 @@ export function changeMarqueeContent(html, blockEl, newContent) {
             const btn = blockEl?.querySelector(':scope > div:nth-child(2)')?.querySelector('a em, em a, strong a, a strong');
             if (btn) btn.innerText = newContent["cta"];
             break;
+        case "thumbnail":
+            const img = blockEl?.querySelector('img');
+            if (img) {
+              img.src = newContent["thumbnail"]["message"];
+              const pic = img.closest('picture');
+              pic.querySelectorAll("source").forEach((s) => s.srcset = newContent["thumbnail"]["message"]);
+            }
+            break;
         }
     });
     return html;
