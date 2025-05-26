@@ -19,6 +19,19 @@ export const [setLibs, getLibs] = (() => {
   ];
 })();
 
+export const [setDOM, getDOM] = (() => {
+  let htmlDOM;
+  return [
+    (currDom) => {
+      htmlDOM = (() => {
+        return currDom;
+      })();
+      return htmlDOM;
+    },
+    () => htmlDOM,
+  ];
+})();
+
 export const [setUnityLibs, getUnityLibs] = (() => {
   let libs;
   return [
