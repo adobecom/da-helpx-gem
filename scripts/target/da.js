@@ -33,7 +33,7 @@ export async function postData(url, html, CONFIGS) {
         const response = await fetch('https://admin.da.live/source/' + url + ".html", {
             method: "POST",
             headers: {
-                "Authorization": `Bearer ${CONFIGS.daToken}`,
+                "Authorization": `${CONFIGS.daToken}`,
                 "Content-Type": "application/x-www-form-urlencoded"
             },
             body: new URLSearchParams({ data: html }) // Encoding data as application/x-www-form-urlencoded
