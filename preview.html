@@ -25,15 +25,16 @@
       }
 
       .loader {
-        width: 48px;
-        height: 48px;
-        border: 5px solid #fff;
-        border-bottom-color: rgb(39 77 234);
+        width: 20px;
+        height: 20px;
+        border: 2px solid #fff;
+        border-bottom-color: #8e8d8d;
         border-radius: 50%;
         display: inline-block;
         box-sizing: border-box;
         animation: rotation 1s linear infinite;
       }
+
       @keyframes rotation {
         0% {
           transform: rotate(0deg);
@@ -42,6 +43,7 @@
           transform: rotate(360deg);
         }
       }
+
       .cta-button {
         display: block; /* Allows margin auto to work */
         background-color: #7155fa;
@@ -102,6 +104,7 @@
 
       img:hover {
         opacity: 0.5;
+        cursor: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='32' height='32' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Ccircle cx='12' cy='12' r='10'/%3E%3Cline x1='12' y1='16' x2='12' y2='8'/%3E%3Cpolyline points='8 12 12 8 16 12'/%3E%3C/svg%3E") 16 16, auto;
       }
       
       @keyframes blink {

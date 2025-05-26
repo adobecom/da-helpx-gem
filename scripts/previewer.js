@@ -154,6 +154,8 @@ async function initiatePreviewer(source, contentUrl, editable, target, targetUrl
         window.addEventListener("message", async (e) => {
           const eventData = e.data;
           if (e.data.hasOwnProperty('generativeContent')) {
+            const generativeContent = eventData.generativeContent;
+            await processGenerativeContent(generativeContent);
             await mapGenerativeContent(html, blockMapping, eventData.generativeContent);
             setDOM(html);
             html = html.map((h) => h.outerHTML).join('');
@@ -237,15 +239,25 @@ async function startHTMLPainting(html, source, contentUrl, target, targetUrl) {
             console.log('Clicked img:', e.target);
             const currSrc = e.target.src;
             console.log(currSrc);
-            let imgTarget = "";
+            let imgTarget = e.target;
             window["imgUpload"].click();
-
             window["imgUpload"].addEventListener('change', async () => {
-              const objectUrl = URL.createObjectURL(window["imgUpload"].files[0]);
-              const s3url = await uploadToS3(window["imgUpload"].files[0]);
+              imgTarget.classList.add('da-process-wait');
+              const s3url = await uploadToDA(window["imgUpload"].files[0]);
               imgTarget.src = s3url;
               const pic = imgTarget.closest('picture');
               if (pic) pic.querySelectorAll('source').forEach((s) => s.srcset = s3url);
+              const closestBlock = e.target.closest('[id^="block-"]');
+              const currHTML = getDOM();
+              const index = currHTML.findIndex(el => el.id === closestBlock.id);
+              const orgpic = currHTML[index].querySelector('picture');
+              orgpic.querySelector('img').src = s3url;
+              orgpic.querySelectorAll('source').forEach((s) => s.srcset = s3url);
+              let tmphtml = currHTML.map((h) => h.outerHTML).join('');
+              tmphtml = fixRelativeLinks(tmphtml);
+              tmphtml = wrapDivs(tmphtml);
+              targetCompatibleHtml(tmphtml, target, targetUrl, CONFIGS);
+              imgTarget.classList.remove('da-process-wait');
             }, { once: true});
           });
         } else if (hasTextNode(el)) {
@@ -273,7 +285,6 @@ async function startHTMLPainting(html, source, contentUrl, target, targetUrl) {
       });
 
     }, 1000, 200);
-
 }
 
 function wrapDivs(htmlString) {
@@ -321,11 +332,13 @@ async function paintHtmlOnPage(html, source, contentUrl, target, targetUrl) {
     const pushToDABtn = document.createElement('a');
     pushToDABtn.href = '#';
     pushToDABtn.classList.add('cta-button');
-    pushToDABtn.innerHTML = '<span><img height="24px" width="24px" src="https://da.live/blocks/edit/img/Smock_Send_18_N.svg"></span>Push to DA';
+    pushToDABtn.innerHTML = '<span class="da-push-icon loader"></span>Push to DA';
 
     document.body.append(pushToDABtn);
 
     await persist(source, contentUrl, target, targetUrl);
+    pushToDABtn.querySelector('span.da-push-icon').classList.remove("loader");
+    pushToDABtn.querySelector('span.da-push-icon').classList.add("not-sending");
 
     const message = { daUrl: `https://da.live/edit#/${targetUrl}` };
 
@@ -335,7 +348,12 @@ async function paintHtmlOnPage(html, source, contentUrl, target, targetUrl) {
     }, '*');
 
     pushToDABtn.addEventListener('click', async () => {
+        pushToDABtn.querySelector('span.da-push-icon').classList.add("loader");
+        pushToDABtn.querySelector('span.da-push-icon').classList.remove("not-sending");
+        
         await persist(source, contentUrl, target, targetUrl);
+        pushToDABtn.querySelector('span.da-push-icon').classList.remove("loader");
+        pushToDABtn.querySelector('span.da-push-icon').classList.add("not-sending");
     });
 }
 
@@ -345,57 +363,61 @@ function getQueryParam(param) {
     return urlParams.get(param);
 }
 
-function generateUUID() {
-  return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function(c) {
-    const r = Math.random() * 16 | 0;
-    const v = c === 'x' ? r : (r & 0x3 | 0x8);
-    return v.toString(16);
-  });
+export function generate6CharGUID() {
+  const chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+  let result = '';
+  for (let i = 0; i < 6; i++) {
+    result += chars.charAt(Math.floor(Math.random() * chars.length));
+  }
+  return result;
 }
 
-function getImageBlobData(url) {
-  return new Promise((res, rej) => {
-    const xhr = new XMLHttpRequest();
-    xhr.open('GET', url);
-    xhr.responseType = 'blob';
-    xhr.onload = () => {
-      if (xhr.status === 200) res(xhr.response);
-      else rej(xhr.status);
-    };
-    xhr.send();
-  });
+export async function presignedToDA(url) {
+  const response = await fetch(url);
+  const blob = await response.blob();
+  const file = new File([blob], `image-${generate6CharGUID()}.jpg`, { type: blob.type });
+  return await uploadToDA(file);
 }
 
-async function uploadToS3(file) {
+async function uploadToDA(file) {
   const form = new FormData();
-  // debugger
   form.append("data", file);
   const options = {
     method: 'POST',
     headers: {
       accept: '*/*',
-      'accept-language': 'en-GB,en-US;q=0.9,en;q=0.8',
       Authorization: `${CONFIGS.daToken}`,
-      'Content-Type': 'multipart/form-data',
-      origin: 'https://da.live',
-      priority: 'u=1, i',
-      referer: 'https://da.live/',
-      'sec-ch-ua': '"Google Chrome";v="135", "Not-A.Brand";v="8", "Chromium";v="135"',
-      'sec-ch-ua-mobile': '?0',
-      'sec-ch-ua-platform': '"macOS"',
-      'sec-fetch-dest': 'empty',
-      'sec-fetch-mode': 'cors',
-      'sec-fetch-site': 'same-site',
-      'user-agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/135.0.0.0 Safari/537.36'
     }
   };
   options.body = form;
   // const guid = `img-${generateUUID()}`;
-  const guid = `myimagename`;
-  const res = await fetch(`https://admin.da.live/source/adobecom/da-cc-sandbox/drafts/adisharm/images/${file.name}`, options);
+  const res = await fetch(`https://admin.da.live/source/adobecom/da-cc-sandbox/drafts/mathuria/images/${file.name}`, options);
   const data = await res.json();
-  // debugger
+
+  const preview_options = {
+    method: 'POST',
+    headers: {
+      Authorization: `${CONFIGS.daToken}`,
+    }
+  };
+  await fetch(`https://admin.hlx.page/preview/adobecom/da-cc-sandbox/main/drafts/mathuria/images/${file.name}`, preview_options);
   return data.aem.previewUrl;
+}
+
+async function processGenerativeContent(generativeContent) {
+  const tasks = [];
+  for (const k1 in generativeContent) {
+    for (const k2 in generativeContent[k1]) {
+      const item = generativeContent[k1][k2];
+      if (item.thumbnail) {
+        const task = presignedToDA(item.thumbnail.message).then(preview => {
+          item.thumbnail.message = preview;
+        });
+        tasks.push(task);
+      }
+    }
+  }
+  await Promise.all(tasks);
 }
 
 initPreviewer();
