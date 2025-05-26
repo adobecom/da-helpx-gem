@@ -67,8 +67,8 @@ async function initPreviewer() {
     const target = getQueryParam('target');
     const targetUrl = getQueryParam('targetUrl');
     const token = getQueryParam('token');
-    CONFIGS.figmaAuthToken = 'Bearer ' + token;
-    CONFIGS.daToken = 'Bearer ' + token;
+    CONFIGS.figmaAuthToken = token.startsWith('Bearer ') ? token : 'Bearer ' + token;
+    CONFIGS.daToken = token.startsWith('Bearer ') ? token : 'Bearer ' + token;
 
     if (!source || !contentUrl || !target || !targetUrl) {
         throw new Error("Source, content Url, target url or target cannot be empty! Stoppping all processing!");
