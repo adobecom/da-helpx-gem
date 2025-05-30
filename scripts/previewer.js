@@ -4,6 +4,7 @@ import {targetCompatibleHtml} from './target.js';
 import {persistOnTarget} from './target.js';
 import {mapGenerativeContent} from './sources/generativeContent.js';
 import { setDOM, getDOM } from './utils.js';
+import { fetchDAContent } from './sources/da.js';
 
 const CONFIGS = {
     'figmaMappingUrl': 'https://440859-genesis-dev.adobeio-static.net/api/v1/web/genesis-aio/fig-comps',
@@ -129,6 +130,9 @@ async function initiatePreviewer(source, contentUrl, editable, target, targetUrl
           }
         });
         blockMapping = pageComponents.blockMapping;
+    } else if (source === 'da') {
+      const htmlEle = await fetchDAContent(contentUrl, CONFIGS);
+      
     }
 
     document.querySelector("#loader-content").innerText = "Building your HTML—precision in progress ";
