@@ -47,26 +47,7 @@ async function fetchFigmaMapping(figmaUrl, CONFIGS) {
 }
 
 async function createHTML(blockMapping, figmaUrl, CONFIGS) {
-  const blocks = blockMapping.details.components;
-    // let html = "";
-    // for (let i=0; i< blocks.length; i++) {
-    //     const obj = blocks[i];
-    //     if (obj.id !== null && obj.path !== null) {
-    //         console.log('foudn a valid block with id: ', obj.id);
-    //         const doc = await fetchContent(obj.path, obj.id);
-    //         let blockContent = getHtml(doc, obj.id, obj.variant);
-
-    //         // get block figma content
-    //         const figContent = await fetchBlockContent(obj.figId, obj.id, figmaUrl, CONFIGS);
-
-    //         // map the figma content before rendering
-    //         blockContent = mapFigmaContent(blockContent, obj.properties, obj.id, figContent);
-    //         if (blockContent !== null && blockContent !== undefined) {
-    //             html += blockContent.outerHTML;
-    //         }
-    //     }
-    // }
-    // return html;
+    const blocks = blockMapping.details.components;
 
     document.querySelector("#loader-content").innerText = "Building the map—block by block ";
     const htmlParts = await Promise.all(
