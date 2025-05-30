@@ -5,7 +5,7 @@ export async function fetchDAContent(daUrl, CONFIGS) {
     console.log(html);
     const parser = new DOMParser();
     const doc = parser.parseFromString(html, 'text/html');
-    html = [...doc.querySelectorAll("body > main > div")];
+    html = [...doc.querySelectorAll("body > main > div > div")];
     return html;
 }
 
