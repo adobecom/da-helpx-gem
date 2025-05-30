@@ -3,7 +3,10 @@ export async function fetchDAContent(daUrl, CONFIGS) {
     const html = await getDAContent(daUrl, CONFIGS);
     // window.sessionStorage.setItem('previewer-html', htmlAndMapping.html);
     console.log(html);
-    return htmlAndMapping;
+    const parser = new DOMParser();
+    const doc = parser.parseFromString(html, 'text/html');
+    html = [...doc.querySelectorAll("body > div > div")];
+    return html;
 }
 
 async function getDAContent(daUrl, CONFIGS) {
