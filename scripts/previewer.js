@@ -131,7 +131,7 @@ async function initiatePreviewer(source, contentUrl, editable, target, targetUrl
         });
         blockMapping = pageComponents.blockMapping;
     } else if (source === 'da') {
-      const html = await fetchDAContent(contentUrl, CONFIGS);
+      html = await fetchDAContent(contentUrl, CONFIGS);
     }
 
     document.querySelector("#loader-content").innerText = "Building your HTML—precision in progress ";
