@@ -1,6 +1,6 @@
 
 export async function fetchDAContent(daUrl, CONFIGS) {
-    const html = await getDAContent(daUrl, CONFIGS);
+    let html = await getDAContent(daUrl, CONFIGS);
     // window.sessionStorage.setItem('previewer-html', htmlAndMapping.html);
     console.log(html);
     const parser = new DOMParser();
