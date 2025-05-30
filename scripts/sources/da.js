@@ -19,7 +19,7 @@ async function getDAContent(daUrl, CONFIGS) {
     const options = {
         method: 'GET',
         headers: {
-          'Content-Type': 'application/json',
+          'Content-Type': 'text/html',
           Authorization: CONFIGS.figmaAuthToken // add a valid token
         }
     };
@@ -30,6 +30,6 @@ async function getDAContent(daUrl, CONFIGS) {
     return {};
     }
 
-    const mapping = await response.json();
-    return mapping;
+    const html = await response.text();
+    return html;
 }
