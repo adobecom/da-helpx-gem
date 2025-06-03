@@ -168,7 +168,7 @@ async function initiatePreviewer(source, contentUrl, editable, target, targetUrl
             html = fixRelativeLinks(html);
             html = wrapDivs(html);
             document.querySelector("#loader-content").innerText = "Bringing blocks to life ";
-            startHTMLPainting(html, source, contentUrl, target, targetUrl);
+            await startHTMLPainting(html, source, contentUrl, target, targetUrl);
             document.querySelector("#loader-container").remove();
             targetCompatibleHtml(html, target, targetUrl, CONFIGS);
             if (editable && html) {
@@ -190,7 +190,7 @@ async function initiatePreviewer(source, contentUrl, editable, target, targetUrl
         })
       );
       
-      startHTMLPainting(html, source, contentUrl, target, targetUrl);
+      await startHTMLPainting(html, source, contentUrl, target, targetUrl);
       document.querySelector("#loader-container").remove();
       targetCompatibleHtml(html, target, targetUrl, CONFIGS);
       if (editable && html) {
