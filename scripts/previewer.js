@@ -93,6 +93,7 @@ function fixRelativeLinks(html) {
 async function initiatePreviewer(source, contentUrl, editable, target, targetUrl, context) {
     window.localStorage.removeItem('previewer-html');
     window.sessionStorage.removeItem('targetHtml');
+    window.sessionStorage.removeItem('editor-html');
     let html = '';
     let blockMapping = '';
     let storedHTML = null;
