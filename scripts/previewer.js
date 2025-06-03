@@ -62,6 +62,9 @@ window.addEventListener("message", (e) => {
 window.parent.postMessage({'iframeReady': true}, '*');
 
 async function initPreviewer() {
+    window.localStorage.removeItem('previewer-html');
+    window.sessionStorage.removeItem('targetHtml');
+    window.sessionStorage.removeItem('editor-html');
     const source = getQueryParam('source');
     const contentUrl = getQueryParam('contentUrl');
     const editable = getQueryParam('editable');
@@ -91,9 +94,6 @@ function fixRelativeLinks(html) {
 }
 
 async function initiatePreviewer(source, contentUrl, editable, target, targetUrl, context) {
-    window.localStorage.removeItem('previewer-html');
-    window.sessionStorage.removeItem('targetHtml');
-    window.sessionStorage.removeItem('editor-html');
     let html = '';
     let blockMapping = '';
     let storedHTML = null;
