@@ -197,10 +197,10 @@ async function initiatePreviewer(source, contentUrl, editable, target, targetUrl
           html
         })
       );
-      targetCompatibleHtml(html, target, targetUrl, CONFIGS);
+      targetCompatibleHtml(html, target, CONFIGS);
       await startHTMLPainting(html, source, contentUrl, target, targetUrl);
       document.querySelector("#loader-container").remove();
-      targetCompatibleHtml(html, target, targetUrl, CONFIGS);
+      targetCompatibleHtml(html, target, CONFIGS);
       if (editable && html) {
           html = renderEditableHtml(html);
       }
@@ -270,7 +270,7 @@ async function startHTMLPainting(html, source, contentUrl, target, targetUrl) {
               let tmphtml = currHTML.map((h) => h.outerHTML).join('');
               tmphtml = fixRelativeLinks(tmphtml);
               tmphtml = wrapDivs(tmphtml);
-              targetCompatibleHtml(tmphtml, target, targetUrl, CONFIGS);
+              targetCompatibleHtml(tmphtml, target, CONFIGS);
               imgTarget.classList.remove('da-process-wait');
             }, { once: true});
           });
@@ -290,7 +290,7 @@ async function startHTMLPainting(html, source, contentUrl, target, targetUrl) {
                   let tmphtml = currHTML.map((h) => h.outerHTML).join('');
                   tmphtml = fixRelativeLinks(tmphtml);
                   tmphtml = wrapDivs(tmphtml);
-                  targetCompatibleHtml(tmphtml, target, targetUrl, CONFIGS);
+                  targetCompatibleHtml(tmphtml, target, CONFIGS);
                 }
               });
             }, { once: true });
