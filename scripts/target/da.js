@@ -45,10 +45,27 @@ export async function postData(url, html, CONFIGS) {
 
         const result = await response.json();
         console.log('Response:', JSON.stringify(result));
+
+        firePreviewRequest(url, CONFIGS);
         // window.open(result.source.editUrl, '_blank');
     } catch (error) {
         console.error("Error:", error);
     }
+}
+
+function firePreviewRequest(url, CONFIGS) {
+    const parts = url.split('/');
+    if (parts.length >= 3) {
+        parts.splice(2, 0, 'main');
+    }
+    const updatedPath = parts.join('/');
+    const response = fetch('https://admin.hlx.page/preview/' + updatedPath, {
+        method: "POST",
+        headers: {
+            "Authorization": `${CONFIGS.daToken}`,
+            "accept": "*/*"
+        },
+    });
 }
 
 function wrapHTMLForDA(html) {

@@ -163,6 +163,13 @@ async function initiatePreviewer(source, contentUrl, editable, target, targetUrl
             const generativeContent = eventData.generativeContent;
             await processGenerativeContent(generativeContent);
             await mapGenerativeContent(html, blockMapping, eventData.generativeContent);
+            let metadataMap = null;
+            for (const key in eventData.generativeContent) {
+              if (eventData.generativeContent[key].hasOwnProperty("Metadata")) {
+                metadataMap = eventData.generativeContent[key]["Metadata"];
+                break;
+              }
+            }
             setDOM(html);
             html = html.map((h) => h.outerHTML).join('');
             html = fixRelativeLinks(html);
@@ -171,7 +178,7 @@ async function initiatePreviewer(source, contentUrl, editable, target, targetUrl
             document.querySelector("#loader-content").innerText = "Bringing blocks to life ";
             await startHTMLPainting(html, source, contentUrl, target, targetUrl);
             document.querySelector("#loader-container").remove();
-            targetCompatibleHtml(html, target, targetUrl, CONFIGS);
+            targetCompatibleHtml(html, target, targetUrl, CONFIGS, metadataMap);
             if (editable && html) {
                 html = renderEditableHtml(html);
             }
