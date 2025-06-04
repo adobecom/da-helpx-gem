@@ -5,9 +5,7 @@ export function targetCompatibleHtml(html, target, CONFIGS) {
 
     if (target === 'da') {
         let modifiedHtml = getDACompatibleHtml(html, CONFIGS);
-        if (metadataMap) {
-            modifiedHtml = populateMetadataBlock(html);
-        }
+        modifiedHtml = populateMetadataBlock(html);
         pushTargetHtmlToSTore(modifiedHtml);
         return modifiedHtml;
     }
