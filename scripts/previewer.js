@@ -167,6 +167,7 @@ async function initiatePreviewer(source, contentUrl, editable, target, targetUrl
             for (const key in eventData.generativeContent) {
               if (eventData.generativeContent[key].hasOwnProperty("Metadata")) {
                 metadataMap = eventData.generativeContent[key]["Metadata"];
+                window.sessionStorage.setItem('metadataMap', JSON.stringify(metadataMap));
                 break;
               }
             }
@@ -178,7 +179,7 @@ async function initiatePreviewer(source, contentUrl, editable, target, targetUrl
             document.querySelector("#loader-content").innerText = "Bringing blocks to life ";
             await startHTMLPainting(html, source, contentUrl, target, targetUrl);
             document.querySelector("#loader-container").remove();
-            targetCompatibleHtml(html, target, CONFIGS, metadataMap);
+            targetCompatibleHtml(html, target, CONFIGS);
             if (editable && html) {
                 html = renderEditableHtml(html);
             }
