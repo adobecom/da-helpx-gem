@@ -13,6 +13,9 @@ export function targetCompatibleHtml(html, target, CONFIGS) {
 
 function populateMetadataBlock(html) {
     const metadataMap = JSON.parse(window.sessionStorage.getItem('metadataMap')) || {};
+    if(Object.keys(metadataMap).length === 0) {
+        return html; // No metadata to add
+    }
     let metaHtml = "<div><div class='metadata'>";
 
     for (const [key, value] of Object.entries(metadataMap)) {
