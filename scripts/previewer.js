@@ -174,11 +174,11 @@ async function initiatePreviewer(source, contentUrl, editable, target, targetUrl
             html = html.map((h) => h.outerHTML).join('');
             html = fixRelativeLinks(html);
             html = wrapDivs(html);
-            targetCompatibleHtml(html, target, targetUrl, CONFIGS);
+            targetCompatibleHtml(html, target, CONFIGS);
             document.querySelector("#loader-content").innerText = "Bringing blocks to life ";
             await startHTMLPainting(html, source, contentUrl, target, targetUrl);
             document.querySelector("#loader-container").remove();
-            targetCompatibleHtml(html, target, targetUrl, CONFIGS, metadataMap);
+            targetCompatibleHtml(html, target, CONFIGS, metadataMap);
             if (editable && html) {
                 html = renderEditableHtml(html);
             }
