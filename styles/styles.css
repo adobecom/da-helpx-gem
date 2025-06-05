@@ -233,3 +233,10 @@ img.da-process-wait {
   min-height: 200px;
   min-width: 200px;
 }
+
+
+.enigma-error-page h1 {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
