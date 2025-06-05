@@ -258,7 +258,7 @@ async function startHTMLPainting(html, source, contentUrl, target, targetUrl) {
             window["imgUpload"].click();
             window["imgUpload"].addEventListener('change', async () => {
               imgTarget.classList.add('da-process-wait');
-              const s3url = await uploadToDA(window["imgUpload"].files[0]);
+              const s3url = await uploadToDA(imgTarget.src, window["imgUpload"].files[0]);
               imgTarget.src = s3url;
               const pic = imgTarget.closest('picture');
               if (pic) pic.querySelectorAll('source').forEach((s) => s.srcset = s3url);
@@ -391,32 +391,36 @@ export async function presignedToDA(url) {
   const response = await fetch(url);
   const blob = await response.blob();
   const file = new File([blob], `image-${generate6CharGUID()}.jpg`, { type: blob.type });
-  return await uploadToDA(file);
+  return await uploadToDA(url, file);
 }
 
-async function uploadToDA(file) {
-  const form = new FormData();
-  form.append("data", file);
-  const options = {
-    method: 'POST',
-    headers: {
-      accept: '*/*',
-      Authorization: `${CONFIGS.daToken}`,
-    }
-  };
-  options.body = form;
-  // const guid = `img-${generateUUID()}`;
-  const res = await fetch(`https://admin.da.live/source/adobecom/da-cc-sandbox/drafts/mathuria/images/${file.name}`, options);
-  const data = await res.json();
+async function uploadToDA(url, file) {
+  try {
+    const form = new FormData();
+    form.append("data", file);
+    const options = {
+      method: 'POST',
+      headers: {
+        accept: '*/*',
+        Authorization: `${CONFIGS.daToken}`,
+      }
+    };
+    options.body = form;
+    const res = await fetch(`https://admin.da.live/source/adobecom/da-cc-sandbox/drafts/mathuria/images/${file.name}`, options);
+    const data = await res.json();
 
-  const preview_options = {
-    method: 'POST',
-    headers: {
-      Authorization: `${CONFIGS.daToken}`,
-    }
-  };
-  await fetch(`https://admin.hlx.page/preview/adobecom/da-cc-sandbox/main/drafts/mathuria/images/${file.name}`, preview_options);
-  return data.aem.previewUrl;
+    const preview_options = {
+      method: 'POST',
+      headers: {
+        Authorization: `${CONFIGS.daToken}`,
+      }
+    };
+    await fetch(`https://admin.hlx.page/preview/adobecom/da-cc-sandbox/main/drafts/mathuria/images/${file.name}`, preview_options);
+    return data.aem.previewUrl;
+  } catch (err) {
+    console.log("Failed to push following to DA! ", )
+  }
+  return url
 }
 
 async function processGenerativeContent(generativeContent) {
