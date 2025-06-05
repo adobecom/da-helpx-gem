@@ -155,15 +155,26 @@ function getHtml(resp, id, variant) {
 async function fetchContent(contentUrl) {
     try {
         const response = await fetch(contentUrl);
-
         if (!response.ok) {
             throw new Error(`HTTP error! Status: ${response.status}`);
         }
-
         const content = await response.text();
         return content;
     } catch (error) {
-        console.error('Error fetching content:', error);
-        return null;
+          try {
+            const response = await fetch(contentUrl);
+            if (!response.ok) {
+                throw new Error(`HTTP error! Status: ${response.status}`);
+            }
+            const content = await response.text();
+            return content;
+        } catch (error) {
+            document.body.innerHTML = `<div class="enigma-error-page">
+                                        <img src = "https://enigma--cc--aishwaryamathuria.aem.live/enigma/assets/errorgif.webp">
+                                        <h1> Oops!! Something broke. It wasn’t me this time. Probably.</h1>
+                                      </div>`
+            console.error('Error fetching content:', error);
+            return null;
+        }
     }
 }
