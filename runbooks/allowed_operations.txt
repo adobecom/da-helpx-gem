@@ -1,0 +1,7 @@
+The following operations are only allowed on our surface:
+
+1. Create a PRD (Product Requirement Document)
+2. Create a figma design from a PRD (Product Requirement doc)
+3. Creating a Document Authoring (DA) page using the figma link
+4. Push the generated page into DA
+5. Generate content for the page
