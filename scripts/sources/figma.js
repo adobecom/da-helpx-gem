@@ -39,7 +39,15 @@ async function fetchFigmaMapping(figmaUrl, CONFIGS) {
       const response = await fetch(CONFIGS.figmaMappingUrl, options)
 
       if (!response.ok) {
-        throw new Error(`HTTP error! Status: ${response.status}`);
+        document.body.innerHTML = `<div class="enigma-error-page">
+                                    <img src = "https://enigma--cc--aishwaryamathuria.aem.live/enigma/assets/errorgif.webp">
+                                    <div>
+                                      <h1> Oops!! Something broke.</h1>
+                                      <h1> Give it another go?</h1>
+                                    </div>
+                                  </div>`
+        console.error("Error getting figma mapping");
+        throw new Error("Error getting figma mapping");
       }
 
       const mapping = await response.json();
@@ -91,6 +99,14 @@ async function fetchBlockContent(figId, id, figmaUrl, CONFIGS) {
       const response = await fetch(CONFIGS.figmaBlockContentUrl, options)
 
       if (!response.ok) {
+        document.body.innerHTML = `<div class="enigma-error-page">
+                                    <img src = "https://enigma--cc--aishwaryamathuria.aem.live/enigma/assets/errorgif.webp">
+                                    <div>
+                                      <h1> Oops!! Something broke.</h1>
+                                      <h1> Give it another go?</h1>
+                                    </div>
+                                  </div>`
+        console.error("Error getting block content");
         return {};
       }
 

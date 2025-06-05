@@ -30,7 +30,14 @@ async function getDAContent(daUrl, CONFIGS) {
     const response = await fetch(`https://admin.da.live/source${url}`, options)
 
     if (!response.ok) {
-    return {};
+      document.body.innerHTML = `<div class="enigma-error-page">
+                                  <img src = "https://enigma--cc--aishwaryamathuria.aem.live/enigma/assets/errorgif.webp">
+                                  <div>
+                                    <h1> Oops!! Something broke.</h1>
+                                    <h1> Give it another go?</h1>
+                                  </div>
+                                </div>`;
+      return {};
     }
 
     const html = await response.text();
