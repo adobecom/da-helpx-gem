@@ -250,7 +250,7 @@ async function startHTMLPainting(html, source, contentUrl, target, targetUrl) {
             window["imgUpload"].click();
             window["imgUpload"].addEventListener('change', async () => {
               imgTarget.classList.add('da-process-wait');
-              const s3url = await uploadToDA(window["imgUpload"].files[0]);
+              const s3url = await uploadToDA(imgTarget.src, window["imgUpload"].files[0]);
               imgTarget.src = s3url;
               const pic = imgTarget.closest('picture');
               if (pic) pic.querySelectorAll('source').forEach((s) => s.srcset = s3url);
