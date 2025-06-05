@@ -171,9 +171,10 @@ async function fetchContent(contentUrl) {
         } catch (error) {
             document.body.innerHTML = `<div class="enigma-error-page">
                                         <img src = "https://enigma--cc--aishwaryamathuria.aem.live/enigma/assets/errorgif.webp">
-                                        <h1> Oops!! Something broke.</h1>
-                                        <h1> It wasn’t me this time.</h1>
-                                        <h1> Probably...</h1>
+                                        <div>
+                                          <h1> Oops!! Something broke.</h1>
+                                          <h1> Give it another go?</h1>
+                                        </div>
                                       </div>`
             console.error('Error fetching content:', error);
             return null;
