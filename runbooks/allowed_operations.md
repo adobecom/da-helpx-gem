@@ -2,15 +2,20 @@ The below operations are the only ones allowed on our surface.
 
 # Operation 1:
     ## Task: Create a PRD or Product requirement Document
+    ## Required fields: Brief about the PRD
+    ## Next Step: Operation 2
     
 # Operation 2:
     ## Task: Create a figma design from a PRD
+    ## Required fields: PRD is needed
+    ## Next step: Operation 3
     
 # Operation 3: 
     ## Task: Creating a Document Authoring or DA page using the figma link
-  
-# Opration 4:
-    ## Task: Push the generated page into DA
+    ## Required fields: DA page url (example https://da.live) , figma url (example, https://https://www.figma.com)
+    ## Next step: Operation 4
     
-# Operation 5:
+# Operation 4:
     ## Task: Generate content for the page
+    ## Required fields: None
+    ## Next Step: None
