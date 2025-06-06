@@ -239,3 +239,7 @@ img.da-process-wait {
   align-items: center;
   justify-content: center;
 }
+
+#loader-content {
+  font-size: 2rem;
+}
