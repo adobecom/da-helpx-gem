@@ -243,3 +243,9 @@ img.da-process-wait {
 #loader-content {
   font-size: 2rem;
 }
+
+@media screen and (min-width: 600px) {
+  .marquee.split .asset.bleed {
+    z-index: 2 !important;
+  }
+}
