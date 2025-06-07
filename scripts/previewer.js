@@ -406,7 +406,8 @@ async function uploadToDA(url, file) {
       }
     };
     options.body = form;
-    const res = await fetch(`https://admin.da.live/source/adobecom/da-cc-sandbox/drafts/mathuria/images/${file.name}`, options);
+    const filename = `image-${generate6CharGUID()}.jpg`;
+    const res = await fetch(`https://admin.da.live/source/adobecom/da-cc-sandbox/drafts/mathuria/images/${filename}`, options);
     const data = await res.json();
 
     const preview_options = {
@@ -415,7 +416,7 @@ async function uploadToDA(url, file) {
         Authorization: `${CONFIGS.daToken}`,
       }
     };
-    await fetch(`https://admin.hlx.page/preview/adobecom/da-cc-sandbox/main/drafts/mathuria/images/${file.name}`, preview_options);
+    await fetch(`https://admin.hlx.page/preview/adobecom/da-cc-sandbox/main/drafts/mathuria/images/${filename}`, preview_options);
     return data.aem.previewUrl;
   } catch (err) {
     console.log("Failed to push following to DA! ", )
