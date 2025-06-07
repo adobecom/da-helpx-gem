@@ -383,10 +383,10 @@ export async function presignedToDA(url) {
   const response = await fetch(url);
   const blob = await response.blob();
   const file = new File([blob], `image-${generate6CharGUID()}.jpg`, { type: blob.type });
-  return await uploadToDA(url, file);
+  return await uploadToDA(url, file, false);
 }
 
-async function uploadToDA(url, file) {
+async function uploadToDA(url, file, fromUpload=true) {
   try {
     const form = new FormData();
     form.append("data", file);
@@ -398,7 +398,11 @@ async function uploadToDA(url, file) {
       }
     };
     options.body = form;
-    const filename = `image-${generate6CharGUID()}.jpg`;
+    let filename = `image-${generate6CharGUID()}.jpg`;
+    if (fromUpload) {
+      const ext = file.name.split('.').pop().toLowerCase();
+      filename = `image-${generate6CharGUID()}.${ext}`;
+    }
     const res = await fetch(`https://admin.da.live/source/adobecom/da-cc-sandbox/drafts/mathuria/images/${filename}`, options);
     const data = await res.json();
 
