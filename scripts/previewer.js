@@ -13,6 +13,7 @@ const CONFIGS = {
     'figmaBlockContentUrl': 'https://runtime.adobe.io/api/v1/web/440859-genesis-dev/genesis-aio/fig-comp-details'
 }
 
+const donotmodify = getQueryParam('donotmodify');
 const storedFigmaAuthToken = window.localStorage.getItem('figmaAuthToken');
 const storedDaToken = window.localStorage.getItem('daToken');
 if (storedFigmaAuthToken && !CONFIGS.figmaAuthToken) {
@@ -49,7 +50,7 @@ const idNameMap = {
 let CONTEXT = null;
 window.addEventListener("message", (e) => {
   const eventData = e.data;
-  console.log(eventData);
+  // console.log(eventData);
   if (eventData.hasOwnProperty('chatContext')) {
       CONTEXT = {
         chat: {
@@ -178,6 +179,28 @@ async function initiatePreviewer(source, contentUrl, editable, target, targetUrl
           }
       }, '*');
     } else {
+      try {
+        const dahtml = await fetchDAContent(targetUrl, CONFIGS, false);
+        if (!donotmodify && typeof dahtml === 'object' && dahtml.length > 0) {
+          console.log("Starting the modification workflow");
+          
+          console.log(html);
+          console.log(dahtml);
+          blockMapping.details.components.forEach((component) => {
+            const componentId = component.id;
+            const currentElementIndex = html.findIndex(domElement => domElement.classList.contains(componentId));
+            const prevurlElementIndex = dahtml.findIndex(domElement => domElement.classList.contains(componentId));
+            if (currentElementIndex > -1 && prevurlElementIndex > -1) {
+              dahtml[prevurlElementIndex] = html[currentElementIndex];
+            }
+          });
+          html = dahtml;
+          console.log(html);
+        }
+      } catch (err) {
+        console.log("Not a modification workflow");
+      }
+      
       setDOM(html);
       html = html.map((h) => h.outerHTML).join('');
       html = fixRelativeLinks(html);
@@ -243,9 +266,9 @@ async function startHTMLPainting(html, source, contentUrl, target, targetUrl) {
       allElements.forEach(el => {
         if (el.nodeName === "IMG") {
           el.addEventListener('click', (e) => {
-            console.log('Clicked img:', e.target);
+            // console.log('Clicked img:', e.target);
             const currSrc = e.target.src;
-            console.log(currSrc);
+            // console.log(currSrc);
             let imgTarget = e.target;
             window["imgUpload"].click();
             window["imgUpload"].addEventListener('change', async () => {
@@ -269,7 +292,7 @@ async function startHTMLPainting(html, source, contentUrl, target, targetUrl) {
           });
         } else if (hasTextNode(el)) {
           el.addEventListener('click', (e) => {
-            console.log('Clicked parent with text node', el);
+            // console.log('Clicked parent with text node', el);
             const oldTxt = e.target.innerText;
             e.target.contentEditable = true;
             e.target.addEventListener('blur', (ev) => {

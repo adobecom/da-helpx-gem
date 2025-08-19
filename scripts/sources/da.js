@@ -1,6 +1,6 @@
 
-export async function fetchDAContent(daUrl, CONFIGS) {
-    let html = await getDAContent(daUrl, CONFIGS);
+export async function fetchDAContent(daUrl, CONFIGS, showerrorscreen = true) {
+    let html = await getDAContent(daUrl, CONFIGS, showerrorscreen);
     // window.sessionStorage.setItem('previewer-html', htmlAndMapping.html);
     console.log(html);
     const parser = new DOMParser();
@@ -10,7 +10,7 @@ export async function fetchDAContent(daUrl, CONFIGS) {
     return html;
 }
 
-async function getDAContent(daUrl, CONFIGS) {
+async function getDAContent(daUrl, CONFIGS, showerrorscreen = true) {
     let url = daUrl;
     if (!url.startsWith('/')) {
         url = '/' + url;
@@ -31,13 +31,15 @@ async function getDAContent(daUrl, CONFIGS) {
     const response = await fetch(`https://admin.da.live/source${url}`, options)
 
     if (!response.ok) {
-      document.body.innerHTML = `<div class="enigma-error-page">
+      if (showerrorscreen) {
+        document.body.innerHTML = `<div class="enigma-error-page">
                                   <img src = "https://enigma--cc--aishwaryamathuria.aem.live/enigma/assets/errorgif.webp">
                                   <div>
                                     <h1> Oops!! Something broke.</h1>
                                     <h1> Give it another go?</h1>
                                   </div>
                                 </div>`;
+      }
       return {};
     }
 
