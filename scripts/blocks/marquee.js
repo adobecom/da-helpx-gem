@@ -45,8 +45,12 @@ export function mapMarqueeContent(blockContent, figContent) {
             } else {
                 const primaryBtn = blockContent.querySelector('a strong, strong a');
                 const secBtn = blockContent.querySelector('a em, em a');
-                primaryBtn.remove();
-                secBtn.remove();
+                if (primaryBtn) {
+                  primaryBtn.remove();
+                }
+                if (secBtn) {
+                  secBtn.remove();
+                }
             }
             break;
         }
