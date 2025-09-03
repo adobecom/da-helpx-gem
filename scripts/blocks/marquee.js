@@ -1,7 +1,7 @@
 export function mapMarqueeContent(blockContent, figContent) {
-    blockContent.classList.remove('small');
-    blockContent.classList.add('light');
-    blockContent.classList.add('large');
+    // blockContent.classList.remove('small');
+    // blockContent.classList.add('light');
+    // blockContent.classList.add('large');
 
     const x = figContent?.details?.properties;
     if (!x) return;
