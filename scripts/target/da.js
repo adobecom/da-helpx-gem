@@ -46,6 +46,16 @@ export async function postData(url, html, CONFIGS) {
         const result = await response.json();
         console.log('Response:', JSON.stringify(result));
 
+        // Dispatch custom event for UI to handle
+        const daContentPushedEvent = new CustomEvent('daContentPushed', {
+            detail: {
+                url: url,
+                result: result,
+                timestamp: new Date().toISOString()
+            }
+        });
+        document.dispatchEvent(daContentPushedEvent);
+
         firePreviewRequest(url, CONFIGS);
         // window.open(result.source.editUrl, '_blank');
     } catch (error) {
