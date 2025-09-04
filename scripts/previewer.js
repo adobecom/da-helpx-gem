@@ -67,25 +67,6 @@ async function initPreviewer() {
     window.sessionStorage.removeItem('targetHtml');
     window.sessionStorage.removeItem('editor-html');
     
-    // Add event listener for DA content pushed events
-    document.addEventListener('daContentPushed', (event) => {
-        const { url, result, timestamp } = event.detail;
-        console.log('Content successfully pushed to DA:', url, result);
-        
-        // You can add UI updates here, such as:
-        // - Show success notification
-        // - Update status indicators
-        // - Enable/disable buttons
-        // - Update progress bars
-        
-        // Example: Update the push button status
-        const pushButton = document.querySelector('.cta-button .da-push-icon');
-        if (pushButton) {
-            pushButton.classList.remove('loader');
-            pushButton.classList.add('success');
-        }
-    });
-    
     const source = getQueryParam('source');
     const contentUrl = getQueryParam('contentUrl');
     const editable = getQueryParam('editable');
